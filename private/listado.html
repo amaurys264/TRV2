@@ -231,7 +231,6 @@
         function show_fiesta()
         {
             const data={
-<<<<<<< HEAD
               method:"POST",
               body:JSON.stringify({ubicacion_p:"Na",precio:"Na"}), 
               headers: {
@@ -243,22 +242,7 @@
                     return resp.json();   
                   })
                 .then(data=>{      
-=======
-                      
-      method:"POST",
-      body:JSON.stringify({ubicacion_p:"Na",precio:"Na"}),
-      headers: {
-                     'Content-Type': 'application/json'
-               }
-   }
-   fetch('/api/fiesta/mostrar',data)
-   .then((resp)=>{        
-    return resp.json();
-    })
 
-                .then(data=>{ 
-                    console.log(data);
->>>>>>> 6bb1f2cccad235b198dc8ca9a9cd81cbabdfa858
                     tabla.innerHTML=`<div class="elemento" style="background-color: rgb(212, 196, 184);">
                         <span class='tabla_head'>Nombre</span>
                         <span class='tabla_head'>Descripción            
