@@ -40,8 +40,8 @@ pool.connect(function(err) {
   });
 
 //-----------------------------------------------------------------------------------//
-/*
- const pool = new postgres.Pool({
+
+ /*const pool = new postgres.Pool({
   user: 'postgres',
   host: 'localhost',
   database: 'renta',
