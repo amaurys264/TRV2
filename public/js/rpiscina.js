@@ -28,7 +28,7 @@ icon_close.onclick=function()
 window.onload=function(){   
    
    peticion();                  
-   setTimeout(cargar,(1000))               
+   setTimeout(cargar,(5000))               
   
 }
 let cargar=function()
