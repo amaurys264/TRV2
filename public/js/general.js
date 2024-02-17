@@ -1,8 +1,9 @@
 var hideshow=document.getElementById('hideshow');
 var navegacion=document.getElementById('navegacion');
-var vista=2;
+navegacion.className="navegacion_class1";
+var vista=1;
 
-var botonera=document.getElementById('botonera');
+var botonera=document.getElementById('#botonera');
 
 hideshow.onclick=function()
 {
@@ -10,12 +11,12 @@ hideshow.onclick=function()
     vista=3-vista;
     if(vista===1)
         {
-            navegacion.style.display="flex";
+            navegacion.className="navegacion_class1";
         }
      else
         {
-            navegacion.style.display="none";
-        }   
+            navegacion.className="navegacion_class2";   
+        }  
 }
 
 

@@ -25,6 +25,7 @@ const organizacion=multer.memoryStorage();
 const newupload=multer({storage:organizacion});
 
 //--------------------conneccion a elephant sql-------------------------------------\\
+
 var conString = "postgres://zfgcmckh:QpXviRZLMhu2uuXUYJWrhCeuUarj2Ud-@motty.db.elephantsql.com/zfgcmckh" //Can be found in the Details page
 var pool = new postgres.Client(conString);
 pool.connect(function(err) {
@@ -40,14 +41,15 @@ pool.connect(function(err) {
   });
 
 //-----------------------------------------------------------------------------------//
-
- /*const pool = new postgres.Pool({
+/*
+ const pool = new postgres.Pool({
   user: 'postgres',
   host: 'localhost',
   database: 'renta',
   password: 'Admin',
   port: 5432,
-})*/
+})
+*/
 
 router.use('*',async(solicitud, respuesta, next) => {        
     if(solicitud.baseUrl=='/favicon.ico')   
@@ -230,8 +232,8 @@ router.get('/login/t_form.html',(req,res)=>
 router.get('/login/listado.html',(req,res)=>
     {    
         const filePath = path.resolve(__dirname, '../private/listado.html');    
-        res.sendFile(filePath);
-    }
+         res.sendFile(filePath);
+  }
 )
 router.get('/login/reporte.html',(req,res)=>
     {    
@@ -244,7 +246,7 @@ router.post('/api/casas',newupload.array('imagenes'),async (req,res,next)=>
         console.log(req.files);
         console.log(req.body);
         console.log("formulario recibido#1")
-        let resultado1= await pool.query(`insert into inmueble (nombre,ubicacion_p,ubicacion_z,descripcion,precio_ta,precio_tb,telefono,fecha_creado,email,estado,posteado,piscina,cocina) values ('${req.body.nombre}','${req.body.ubicacion_p}','${req.body.ubicacion_z}','${req.body.descripcion}',${req.body.precio_ta}, 0,'+5354310877','19-12-2023','amaurys264@gmail.com','Disponible', true,${(req.body.piscina)?'true':'false'},${(req.body.cocina)?'true':'false'})`);                 
+        let resultado1= await pool.query(`insert into inmueble (nombre,ubicacion_p,ubicacion_z,descripcion,precio_ta,precio_tb,telefono,email,estado,posteado,piscina,cocina) values ('${req.body.nombre}','${req.body.ubicacion_p}','${req.body.ubicacion_z}','${req.body.descripcion}',${req.body.precio_ta}, 0,'+5354310877','amaurys264@gmail.com','Disponible', true,${(req.body.piscina)?'true':'false'},${(req.body.cocina)?'true':'false'})`);                 
         req.files.forEach(async(element) => {            
             let query = {
                 text: 'INSERT INTO c_imagenes (path,nombre,owner,buffer) VALUES ($1,$2,$3,$4)',
@@ -257,7 +259,7 @@ router.post('/api/casas',newupload.array('imagenes'),async (req,res,next)=>
 router.post('/api/pasadias',newupload.array('p_imagenes'),async (req,res,next)=>
     {
         console.log("formulario recibido#2")        
-        let resultado1= await pool.query(`insert into piscina (nombre, ubicacion_p, ubicacion_z, horario_d, horario_n, capacidad, gastronomia, precio, notas, j_mesa, fecha, telefono,parrillada,habitaciones) values ('${req.body.p_nombre}','${req.body.p_ubicacion_p}','${req.body.p_ubicacion_z}',${(req.body.p_horario_d)?'true':'false'},${(req.body.p_horario_n)?'true':'false'},${req.body.p_capacidad},${(req.body.p_gastronomia)?'true':'false'},${req.body.p_precio},'${req.body.p_notas}',${(req.body.p_juegos)?'true':'false'},'19-12-2023','${req.body.p_telefono}',${(req.body.p_parrillada)?'true':'false'},${(req.body.p_habitaciones)?'true':'false'})`);                       
+        let resultado1= await pool.query(`insert into piscina (nombre, ubicacion_p, ubicacion_z, horario_d, horario_n, capacidad, gastronomia, precio, notas, j_mesa, telefono,parrillada,habitaciones) values ('${req.body.p_nombre}','${req.body.p_ubicacion_p}','${req.body.p_ubicacion_z}',${(req.body.p_horario_d)?'true':'false'},${(req.body.p_horario_n)?'true':'false'},${req.body.p_capacidad},${(req.body.p_gastronomia)?'true':'false'},${req.body.p_precio},'${req.body.p_notas}',${(req.body.p_juegos)?'true':'false'},'${req.body.p_telefono}',${(req.body.p_parrillada)?'true':'false'},${(req.body.p_habitaciones)?'true':'false'})`);                       
         console.log("Insertando en tabla Piscina.")
         req.files.forEach(async(element) => {
             //await pool.query(`insert into p_imagenes (path,nombre,owner) values ('${element.filename}','${element.originalname}','${req.body.p_nombre}')`);
