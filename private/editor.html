@@ -5,20 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/css/font-awesome.css">
     <link rel="stylesheet" href="../css/g_style.css">
-    <style> 
-        header{justify-content:left ; }       
-        #section_container{background-color: black;}
-        .b_navegacion{display:flex;justify-content: left;padding: 0px 25px;}  
-        #section_container {display:grid;grid-template-columns: 230px auto;justify-content: stretch;}     
-        #section_container > *
-        {
-            height: 100%;            
-        }
-        aside{background-color:rgba(65,139,168,1);}
-        section{width: 100%;background-color:rgb(223, 223, 223);}    
-        iframe{background-color: rgb(223, 223, 223);width: 99.6%;height: 100%;border-width: 0px ;}
-        #contenido{display:block;}
-        .encabezado{padding:0px 20px}
+    <style>
+    @media only screen and (min-width: 300px) and (max-width: 767px)
+        { 
+            header{justify-content:left ; }       
+                #section_container{background-color: black;}
+                .b_navegacion{display:flex;justify-content: left;padding: 0px 25px;}  
+                #section_container {display:grid;grid-template-rows: auto auto;justify-content: stretch;}     
+                /*#section_container > *
+                {
+                    height: 100%;            
+                }*/
+                aside{background-color:rgba(65,139,168,1);}
+                section{width: 100%;background-color:rgb(223, 223, 223);}    
+                iframe{background-color: rgb(223, 223, 223);width: 99.6%;height: 100%;border-width: 0px ;}
+                #contenido{display:block;}
+                .encabezado{padding:0px 20px}; 
+        }  
+    @media only screen and (min-width: 768px) 
+        {   
+                 header{justify-content:left ; }       
+                #section_container{background-color: black;}
+                .b_navegacion{display:flex;justify-content: left;padding: 0px 25px;}  
+                #section_container {display:grid;grid-template-columns: 230px auto;justify-content: stretch;}     
+                #section_container > *
+                {
+                    height: 100%;            
+                }
+                aside{background-color:rgba(65,139,168,1);}
+                section{width: 100%;background-color:rgb(223, 223, 223);}    
+                iframe{background-color: rgb(223, 223, 223);width: 99.6%;height: 100%;border-width: 0px ;}
+                #contenido{display:block;}
+                .encabezado{padding:0px 20px}                  
+        }   
     </style>
     <title>Gestion de casas</title>
 </head>
