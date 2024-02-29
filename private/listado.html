@@ -68,35 +68,56 @@
         <script>
             var tabla=document.getElementById('tabla');
             var radioButton = document.querySelectorAll('input[type="radio"]')
-            var datos
-            radioButton.forEach((radio)=>
+            var datos;
+            var listado;
+            var canal;
+            
+            radioButton.forEach((apartado)=>
                 {
-                    radio.onchange=function()
+                    apartado.onchange=function()
                     {
-                        switch(radio.value)
-                        {
-                            case "casas":
-                                show_casas()
-                                break;                                
-                            case "piscinas":                               
-                                show_piscina();
-                                break;    
-                            case "fiesta":
-                                show_fiesta();
-                                break;                                
-                            case "transporte":
-                                show_transporte();
-                                break;
-                        }
-
+                        show_all(apartado); 
                     }    
                 }
             
             )
             window.onload=function()
             {
-                show_casas()
+                show_casas();
+                canal=1
+                cargar(1);
+                var time=setInterval(()=>
+                    {
+                            console.log("Refrescando.");
+                            cargar(canal);
+                    }
+                        ,2000)
             }
+        function show_all(radio)
+        {
+            switch(radio.value)
+                        {
+                            case "casas":
+                                canal=1
+                                show_casas()
+                                cargar(1);
+                                break;                                
+                            case "piscinas":
+                                canal=2                               
+                                show_piscina();
+                                cargar(2);
+                                break;    
+                            case "fiesta":
+                                canal=3
+                                show_fiesta();
+                                cargar(3);
+                                break;                                
+                            case "transporte":
+                                canal=4
+                                show_transporte();
+                                break;
+                        }
+        }
         function show_casas()
         {
             const data={
@@ -106,13 +127,12 @@
                         'Content-Type': 'application/json'
                        }
                         }
-            fetch('/api/casas/mostrar',data)
+            fetch('/api/casas/mostrar/lite',data)
                   .then((resp)=>{        
                     return resp.json();   
                   })
 
-                .then(data=>{   
-                        console.log(data);
+                .then(data=>{                          
                         tabla.innerHTML=`<div class="elemento" style="background-color: rgb(212, 196, 184);">
                         <span class='tabla_head'>Nombre</span>
                         <span class='tabla_head'>Descripción            
@@ -140,7 +160,7 @@
                                     </span>
                                     <span>
                                         <li class="fa fa-image" title="Cantidad de imagenes"></li>
-                                               ${element.galeria.length}
+                                               ${element.number}
                                     </span>
                                     <span style="text-align:center">$
                                         ${element.precio_ta}
@@ -161,7 +181,7 @@
                   {
                      console.error('Error:__',error+"__")
                   })
-                  setTimeout(()=>{cargar(1)},1000);
+                  //setTimeout(()=>{cargar(1)},1000);
         }
         function show_piscina()
         {
@@ -172,12 +192,11 @@
                         'Content-Type': 'application/json'
                        }
                         }
-            fetch('/api/piscina/mostrar',data)
+            fetch('/api/piscina/mostrar/lite',data)
                   .then((resp)=>{        
                     return resp.json();   
                   })
-                .then(data=>{ 
-                    console.log(data);
+                .then(data=>{                     
                     tabla.innerHTML=`<div class="elemento" style="background-color: rgb(212, 196, 184);">
                         <span class='tabla_head'>Nombre</span>
                         <span class='tabla_head'>Descripción            
@@ -205,7 +224,7 @@
                                     </span>
                                     <span>
                                         <li class="fa fa-image" title="Cantidad de imagenes"></li>
-                                               ${element.galeria.length}
+                                               ${element.number}
                                     </span>
                                     <span style="text-align:center">$
                                         ${element.precio}
@@ -226,7 +245,7 @@
                   {
                      console.error('Error:__',error+"__")
                   })
-                  setTimeout(()=>{cargar(2)},1000);
+                  //setTimeout(()=>{cargar(2)},1000);
         }
         function show_fiesta()
         {
@@ -237,7 +256,7 @@
                         'Content-Type': 'application/json'
                        }
                         }
-            fetch('/api/fiesta/mostrar',data)
+            fetch('/api/fiesta/mostrar/lite',data)
                   .then((resp)=>{        
                     return resp.json();   
                   })
@@ -270,7 +289,7 @@
                                     </span>
                                     <span>
                                         <li class="fa fa-image" title="Cantidad de imagenes"></li>
-                                               ${element.galeria.length}
+                                               ${element.number}
                                     </span>
                                     <span style="text-align:center">$
                                         ${element.precio}
@@ -291,7 +310,7 @@
                   {
                      console.error('Error:__',error+"__")
                   })
-                  setTimeout(()=>{cargar(3)},1000);
+                 // setTimeout(()=>{cargar(3)},1000);
         }
         function show_transporte()
         {
@@ -302,12 +321,11 @@
                         'Content-Type': 'application/json'
                        }
                         }
-            fetch('/api/transporte/mostrar',data)
+            fetch('/api/transporte/mostrar/lite',data)
                   .then((resp)=>{        
                     return resp.json();   
                   })
-                .then(data=>{ 
-                    console.log(data);
+                .then(data=>{                     
                     tabla.innerHTML=`<div class="elemento" style="background-color: rgb(212, 196, 184);">
                         <span class='tabla_head'>Nombre</span>
                         <span class='tabla_head'>Descripción            
@@ -335,7 +353,7 @@
                                     </span>
                                     <span>
                                         <li class="fa fa-image" title="Cantidad de imagenes"></li>
-                                               ${element.galeria.length}
+                                               ${element.number}
                                     </span>
                                     <span style="text-align:center">???
                                         
@@ -349,23 +367,24 @@
             else
             {
                tabla.innerHTML=`<h4 style="display: block;text-align: center;margin:auto;">No hay artículos para mostrar</h4>`                
-            }            
+            }
+            console.log(data);            
          })    
             .catch((error)=>
                   {
                      console.error('Error:__',error+"__")
                   })
-                  setTimeout(()=>{cargar(4)},1000);
+                 // setTimeout(()=>{cargar(4)},2000);
         }
         let cargar=function(channel)
         {
-                let listado=document.querySelectorAll('.s_delete')
+                listado=document.querySelectorAll('.s_delete')
                 console.log(channel)
                 listado.forEach((anuncio,index)=>
                     {
                         anuncio.onclick=function()
                             {
-                                console.log(anuncio.dataset.iddom)
+                                console.log("borrarndo "+anuncio.dataset.iddom)
                                 const opt={
                                   method:"DELETE",
                                     body:JSON.stringify({canal:channel,campo_nombre:anuncio.dataset.iddom}),
@@ -380,7 +399,8 @@
                                 .then(data=>{      
                                  if (data.borrado!==null)   
                                  {
-                                    alert("El anuncio *"+data.borrado+"* ha sido eliminado.")  
+                                    alert("El anuncio *"+data.borrado+"* ha sido eliminado.")   
+                                                                  
                                     switch(channel)
                                             {
                                                 case 1:
@@ -395,7 +415,7 @@
                                                 case 4:
                                                     show_transporte();
                                                     break;
-                                            }  
+                                               }  
                                 }
                                 }).catch((error)=>
                             {

@@ -27,14 +27,14 @@
         <label for="t_modelo">Modelo :</label>
         <input type="text" id="t_modelo" name="t_modelo" required><br/>
         <label for="t_capacidad">Capacidad de personas :</label>
-        <input type="number" id="t_capacidad" name="t_capacidad" value="4"><br/>
+        <input type="number" id="t_capacidad" name="t_capacidad" value="4" min=0 ><br/>
         <label for="t_embrague">Embrague :</label>
         <select id="t_embrague" name="t_embrague">
             <option value="manual">Manual</option>
             <option value="automatico">Automático</option>
         </select><br/>
         <label for="t_autonomia">Autonomía (Km):</label>
-        <input id="t_autonomia" name="t_autonomia" type="number" required>
+        <input id="t_autonomia" name="t_autonomia" type="number" min=0 required>
         <br/><br/>
         <label for="t_imagenes">Imagenes:</label>
         <input type="file" name="t_imagenes" id="t_imagenes" multiple style="width:50%;"><br/><br/>

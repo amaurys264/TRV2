@@ -35,7 +35,7 @@ window.onload=function(){
 let cargar=function()
 {
    var elementos=document.querySelectorAll('.elemento')
-   
+   console.log(elemetos.length +" Eventos pendientes");
    elementos.forEach((tarjeta)=>
          {
             tarjeta.onclick=function()

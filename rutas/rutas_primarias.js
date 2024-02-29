@@ -25,7 +25,7 @@ const organizacion=multer.memoryStorage();
 const newupload=multer({storage:organizacion});
 
 //--------------------conneccion a elephant sql-------------------------------------\\
-
+/*
 var conString = "postgres://zfgcmckh:QpXviRZLMhu2uuXUYJWrhCeuUarj2Ud-@motty.db.elephantsql.com/zfgcmckh" //Can be found in the Details page
 var pool = new postgres.Client(conString);
 pool.connect(function(err) {
@@ -39,9 +39,9 @@ pool.connect(function(err) {
       console.log(result.rows[0].theTime); // >> output: 2018-08-23T14:02:57.117Z     
     });
   });
-
+*/
 //-----------------------------------------------------------------------------------//
-/*
+
  const pool = new postgres.Pool({
   user: 'postgres',
   host: 'localhost',
@@ -49,7 +49,7 @@ pool.connect(function(err) {
   password: 'Admin',
   port: 5432,
 })
-*/
+
 
 router.use('*',async(solicitud, respuesta, next) => {        
     if(solicitud.baseUrl=='/favicon.ico')   
@@ -85,12 +85,50 @@ router.post('/api/casas/mostrar',express.json(),async (req,res)=>
         
         const resultado= await pool.query(sqlquery);        
         let imagenes= await pool.query(`select * from c_imagenes`);                      
-        
+        console.log(imagenes.rows) 
         resultado.rows.forEach((indice1)=>
             {
                 indice1.galeria=imagenes.rows.filter((indice2)=>
                     {
                         return indice1.nombre==indice2.owner;
+                    }
+                )
+            }
+        )        
+        res.send({casas:resultado.rows});
+    }
+)
+router.post('/api/casas/mostrar/lite',express.json(),async (req,res)=>
+    {
+       
+        let sqlquery='select * from inmueble';
+        if (req.body.ubicacion_p!=='Na')
+                {
+                          sqlquery+=` where ubicacion_p='${req.body.ubicacion_p}'`
+                }
+        
+                if(req.body.precio =='asc')
+                 {
+                    sqlquery+=` order by precio_ta asc`
+                 }
+                if(req.body.precio =='desc')
+                 {
+                    sqlquery+=` order by precio_ta desc`
+                 }
+        
+        const resultado= await pool.query(sqlquery);        
+        let imagenes= await pool.query(`select id,path,owner from c_imagenes`); 
+        console.log(imagenes)                     
+        
+        resultado.rows.forEach((indice1)=>
+            {
+                indice1.number=0;  
+                imagenes.rows.forEach((indice2)=>
+                    {
+                        if(indice1.nombre==indice2.owner)
+                        {
+                            indice1.number+=1;
+                        }
                     }
                 )
             }
@@ -117,6 +155,38 @@ router.post('/api/piscina/mostrar',express.json(),async (req,res)=>
                  }        
         const resultado= await pool.query(sqlquery);         
         let imagenes= await pool.query(`select * from p_imagenes`);                      
+        
+        resultado.rows.forEach((indice1)=>
+            {
+                indice1.galeria=imagenes.rows.filter((indice2)=>
+                    {
+                        return indice1.nombre==indice2.owner;
+                    }
+                )
+            }
+        )       
+        res.send({piscina:resultado.rows});
+    }
+)
+router.post('/api/piscina/mostrar/lite',express.json(),async (req,res)=>
+    {
+        
+        let sqlquery='select * from piscina';
+        if (req.body.ubicacion_p!=='Na')
+                {
+                        sqlquery+=` where ubicacion_p='${req.body.ubicacion_p}'`
+                }
+        
+                if(req.body.precio =='asc')
+                 {
+                    sqlquery+=` order by precio asc`
+                 }
+                if(req.body.precio =='desc')
+                 {
+                    sqlquery+=` order by precio desc`
+                 }        
+        const resultado= await pool.query(sqlquery);         
+        let imagenes= await pool.query(`select id,path,owner from p_imagenes`);                      
         
         resultado.rows.forEach((indice1)=>
             {
@@ -161,6 +231,41 @@ router.post('/api/fiesta/mostrar',express.json(),async (req,res)=>
         res.send({fiesta:resultado.rows});
     }
 )
+router.post('/api/fiesta/mostrar/lite',express.json(),async (req,res)=>
+    {
+        let sqlquery='select * from fiesta';
+        if (req.body.ubicacion_p!=='Na')
+                {
+                        sqlquery+=` where ubicacion_p='${req.body.ubicacion_p}'`
+                }
+        
+                if(req.body.precio =='asc')
+                 {
+                    sqlquery+=` order by precio asc`
+                 }
+                if(req.body.precio =='desc')
+                 {
+                    sqlquery+=` order by precio desc`
+                 }        
+        const resultado= await pool.query(sqlquery);                
+        let imagenes= await pool.query(`select id,path,owner from f_imagenes`);                      
+        
+        resultado.rows.forEach((indice1)=>
+            {
+                indice1.number=0;  
+                imagenes.rows.forEach((indice2)=>
+                    {
+                        if(indice1.nombre==indice2.owner)
+                        {
+                            indice1.number+=1;
+                        }
+                    }
+                )
+            }
+        )        
+        res.send({fiesta:resultado.rows});
+    }
+)
 router.post('/api/transporte/mostrar',express.json(),async (req,res)=>
     {
         let sqlquery='select * from transporte';       
@@ -182,6 +287,39 @@ router.post('/api/transporte/mostrar',express.json(),async (req,res)=>
                 indice1.galeria=imagenes.rows.filter((indice2)=>
                     {
                         return indice1.nombre==indice2.owner;
+                    }
+                )
+            }
+        )
+        
+        res.send({transporte:resultado.rows});
+    }
+)
+router.post('/api/transporte/mostrar/lite',express.json(),async (req,res)=>
+    {
+        let sqlquery='select * from transporte';       
+        
+                if(req.body.autonomia =='asc')
+                 {
+                    sqlquery+=` order by autonomia asc`
+                 }
+                if(req.body.autonomia =='desc')
+                 {
+                    sqlquery+=` order by autonomia desc`
+                 }        
+                
+        const resultado= await pool.query(sqlquery);           
+        let imagenes= await pool.query(`select id,path,owner from t_imagenes`);                      
+        
+        resultado.rows.forEach((indice1)=>
+            {
+                indice1.number=0;  
+                imagenes.rows.forEach((indice2)=>
+                    {
+                        if(indice1.nombre==indice2.owner)
+                        {
+                            indice1.number+=1;
+                        }
                     }
                 )
             }
@@ -354,24 +492,26 @@ router.post('/login/access',urlencodedParser,(solicitud,respuesta)=>
     }
 )    
 router.delete('/api/all',express.json(),async (req,res,next)=>
-    {       
+    {   
+        console.log("peticion de borrado-->")
+        console.log(req.body)    
         switch (req.body.canal)
         {
             case 1: 
                 await pool.query(`DELETE FROM inmueble WHERE nombre='${req.body.campo_nombre}';`);          
-                await pool.query(`DELETE FROM c_imagenes WHERE nombre='${req.body.campo_nombre}';`);            
+                await pool.query(`DELETE FROM c_imagenes WHERE owner='${req.body.campo_nombre}';`);            
                 break;
             case 2: 
                 await pool.query(`DELETE FROM piscina WHERE nombre='${req.body.campo_nombre}';`);          
-                await pool.query(`DELETE FROM p_imagenes WHERE nombre='${req.body.campo_nombre}';`);            
+                await pool.query(`DELETE FROM p_imagenes WHERE owner='${req.body.campo_nombre}';`);            
                 break;    
             case 3: 
                 await pool.query(`DELETE FROM fiesta WHERE nombre='${req.body.campo_nombre}';`);          
-                await pool.query(`DELETE FROM f_imagenes WHERE nombre='${req.body.campo_nombre}';`);            
+                await pool.query(`DELETE FROM f_imagenes WHERE owner='${req.body.campo_nombre}';`);            
                 break;    
             case 4: 
                 await pool.query(`DELETE FROM transporte WHERE nombre='${req.body.campo_nombre}';`);          
-                await pool.query(`DELETE FROM t_imagenes WHERE nombre='${req.body.campo_nombre}';`);            
+                await pool.query(`DELETE FROM t_imagenes WHERE owner='${req.body.campo_nombre}';`);            
                 break;                
         }        
         res.send({borrado: req.body.campo_nombre})
