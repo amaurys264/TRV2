@@ -332,7 +332,7 @@ router.get('/api/reporte',async (req,res)=>
     {
       
         const v_real= await pool.query('select count (distinct ipclient) from log');        
-        const v_total= await pool.query('select count (*) from log');       
+        //const v_total= await pool.query('select count (*) from log');       
         let db_size;
         try
                 {    
