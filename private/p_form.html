@@ -28,6 +28,7 @@
                 select , input ,option{display:block;width: 95%;color: rgb(68, 67, 67);border-color:rgb(226, 226, 226);padding: 5px;}
                 input[type="checkbox"]{display:inline-block;width: 10px;}
                 textarea{width: 100%;height: 100px;resize: none;max-lines:1 ;}
+                fieldset{color:rgb(134, 134, 134);font-weight: 900;border-color:rgb(255, 254, 254) ;}               
                 button{background-color:rgba(65,139,168,100%);color:aliceblue;padding: 5px 15px;cursor:pointer;text-shadow: black 1px 1px 2px;}
                 form *{font-size: 1.6 rem;}
         } 
@@ -72,28 +73,36 @@
         </select><br/>
         <label for="p_ubicacion_z">Zona :</label>
         <input id="p_ubicacion_z"type="text" name="p_ubicacion_z" required><br/>
-        <label for="p_horario_d">Horario diurno</label>
-        <input type="checkbox" name="p_horario_d" id="p_horario_d" checked><br/>
-        <label for="p_horario_n">Horario nocturno</label>
-        <input type="checkbox" name="p_horario_n" id="p_horario_n"><br/>
+        <fieldset>
+            <legend>  Horario  </legend>        
+        <input type="checkbox" name="p_horario_d" id="p_horario_d" checked><label for="p_horario_d">Horario diurno</label><br/>        
+        <input type="checkbox" name="p_horario_n" id="p_horario_n"><label for="p_horario_n">Horario nocturno</label><br/>
+        </fieldset>
+        <br/>
         <label>Capacidad de personas :</label>
         <input type="number" name="p_capacidad" id="capacidad" min=0 required>
         <br/>                
         <label for="p_precio">Precio :</label>
         <input type="number" name="p_precio" id="p_precio" min=0 required><br/>
+        <label for="moneda">Moneda :</label>
+        <select id="moneda" name="moneda">
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="CUP">CUP</option>
+        </select><br/>
         <label for="p_telefono">Telf. de contacto :</label>
         <input type="tel" name="p_telefono" id="p_telefono" value="+5350103060"required><br/>
         <label for="p_imagenes">Imagenes:</label>
         <input type="file" name="p_imagenes" id="p_imagenes" multiple style="width:50%;"><br/><br/>
         <fieldset>
             <legend>Confort</legend>
-            <label for="p_gastronimia">Servicio gastronómico</label><input type="checkbox" name="p_gastronomia" id="p_gastronimia" >
-            <label for="p_juegos">Entretenimiento </label><input type="checkbox" name="p_juegos" id="p_juegos" >
-            <label for="p_parrilladas">Parrillada</label><input type="checkbox" name="p_parrillada" id="p_parrillada" >
-            <label for="p_habitaciones">Habitaciones</label><input type="checkbox" name="p_habitaciones" id="p_habitaciones" >
+            <input type="checkbox" name="p_gastronomia" id="p_gastronimia" ><label for="p_gastronimia">Servicio gastronómico</label><br/>
+            <input type="checkbox" name="p_juegos" id="p_juegos" ><label for="p_juegos">Entretenimiento </label><br/>
+            <input type="checkbox" name="p_parrillada" id="p_parrillada" ><label for="p_parrillada">Parrillada</label><br/>
+            <input type="checkbox" name="p_habitaciones" id="p_habitaciones" ><label for="p_habitaciones">Habitaciones</label><br/>
         </fieldset>
         <label>Notas</label>
-        <textarea maxlength="512;" name="p_notas" value="vacio"></textarea>
+        <textarea  name="p_notas" value="vacio"></textarea>
         <hr/>
         <button type="submit" id="p_enviar">Guardar</button>
     </form>

@@ -27,6 +27,7 @@
                 input[type="checkbox"]{display:inline-block;width: 10px;}
                 textarea{width: 100%;height: 100px;resize: none;max-lines:1 ;}
                 button{background-color:rgba(65,139,168,100%);color:aliceblue;padding: 5px 15px;cursor:pointer;text-shadow: black 1px 1px 2px;}
+                fieldset{color:rgb(134, 134, 134);font-weight: 900;border-color:rgb(255, 254, 254) ;}               
                 form *{font-size: 1.6 rem;}
         } 
         @media only screen and (min-width: 768px) 
@@ -80,20 +81,29 @@
         <label for="f_capacidad">Capacidad :</label>
         <input type="number" id="f_capacidad" name="f_capacidad" min=0 required><br/> 
         <label for="f_precio">Precio :</label>
-        <input type="number" name="f_precio"  id="f_precio" value="" min=0 required><br/>       
+        <input type="number" name="f_precio"  id="f_precio" value="" min=0 required><br/>
+        <label for="moneda">Moneda :</label>
+        <select id="moneda" name="moneda">
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="CUP">CUP</option>
+        </select><br/>       
         <label for="f_telefono">Telf. de contacto :</label>
         <input type="tel" name="f_telefono" id="f_telefono" value="+5350103060"required><br/>
-        <label for="f_horario_d">Horario diurno?</label>
-        <input type="checkbox" name="f_horario_d" id="f_horario_d" checked><br/> 
-        <label for="f_horario_n">Horario nocturno?</label>
-        <input type="checkbox" name="f_horario_n" id="f_horario_n"><br/>         
         <fieldset>
-            <legend>Confort</legend>
-                <label for="f_decoracion">Servicio de decoración :</label><input type="checkbox" name="f_decoracion" id="f_decoracion"><br/>
-                <label for="f_audio">Equipo de audio :</label><input type="checkbox" name="f_audio" id="f_audio"><br/>
-                <label for="f_piscina">Piscina :</label><input type="checkbox" name="f_piscina" id="f_piscina"><br/>
-                <label for="f_gastronomia">Ofertas gastronómicas :</label><input type="checkbox" name="f_gastronomia" id="f_gastronomia"><br/>
-                <label for="f_entretenimiento">Entretenimiento :</label><input type="checkbox" name="f_entretenimiento" id="f_entretenimiento"><br/>
+            <legend>  Horario  </legend>        
+        <input type="checkbox" name="f_horario_d" id="f_horario_d" checked>
+        <label for="f_horario_d">Diurno</label><br/>         
+        <input type="checkbox" name="f_horario_n" id="f_horario_n">
+        <label for="f_horario_n">Nocturno</label><br/> 
+        </fieldset>
+        <fieldset>
+            <legend>  Confort  </legend>
+                 <input type="checkbox" name="f_decoracion" id="f_decoracion"><label for="f_decoracion">Servicio de decoración</label><br/>
+                 <input type="checkbox" name="f_audio" id="f_audio"><label for="f_audio">Equipo de audio </label><br/>
+                 <input type="checkbox" name="f_piscina" id="f_piscina"><label for="f_piscina">Piscina</label><br/>
+                 <input type="checkbox" name="f_gastronomia" id="f_gastronomia"><label for="f_gastronomia">Ofertas gastronómicas </label><br/>
+                 <input type="checkbox" name="f_entretenimiento" id="f_entretenimiento"><label for="f_entretenimiento">Entretenimiento </label><br/>
         </fieldset>
         <br/>
         <label for="f_imagenes">Imágenes :</label>
@@ -101,7 +111,7 @@
         <hr/>
         <br/>
         <label style="width: 98%;">Nota</label><br>
-        <textarea maxlength="512;" name="f_nota" value="" required placeholder="Escribe aqui algunas aclaracione acerca del local...">            
+        <textarea name="f_nota" value="" required placeholder="Escribe aqui algunas aclaracione acerca del local...">            
         </textarea><br/> 
         <hr/>      
         <button type="submit" id="f_enviar">Guardar</button>

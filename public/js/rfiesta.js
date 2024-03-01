@@ -118,7 +118,7 @@ function peticion()
                                <p><i>${element.nota}</i></p>
                             </div>
                             <div>
-                                  <span>Precio:</span><span class="data_precio">$${element.precio}.00</span>
+                                  <span>Precio:</span><span class="data_precio">$${element.precio}.00</span><span class="encabezado2">${element.moneda}</span>
                             </div>                  
                          </div>
                    </div>`        

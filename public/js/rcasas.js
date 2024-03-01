@@ -10,6 +10,7 @@ var zona=document.querySelector('#c_zona');
 var descripcion=document.querySelector('#c_descripcion');
 var estado=document.querySelector('#c_estado');
 var costo=document.querySelector('#cl_costo');
+var moneda=document.querySelector('#cl_moneda');
 var confort=document.querySelector('#c_confort');
 var confortl=document.querySelector('#cl_confort');
 var slider=document.querySelector('.c_slider');
@@ -71,7 +72,7 @@ function peticion()
                                <p><i>${element.descripcion}</i></p>
                             </div>
                             <div>
-                                  <span>Precio:</span><span class="data_precio">$${element.precio_ta}.00</span>
+                                  <span>Precio:</span><span class="data_precio">${element.precio_ta}.00</span><span class="encabezado2">${element.moneda}</span>
                             </div>                  
                          </div>
                    </div>`        

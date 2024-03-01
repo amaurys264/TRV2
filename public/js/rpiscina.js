@@ -11,6 +11,7 @@ var capacidad=document.querySelector('#c_capacidad');
 var descripcion=document.querySelector('#c_descripcion');
 var horario=document.querySelector('#c_horario');
 var costo=document.querySelector('#cl_costo');
+var moneda=document.querySelector('#cl_moneda');
 var confort=document.querySelector('#c_confort');
 var confort_l=document.querySelector('#cl_confort');
 var slider=document.querySelector('.c_slider');
@@ -121,7 +122,7 @@ function peticion()
                                  <p><i>${element.notas}</i></p>
                               </div>
                               <div>
-                                    <span>Precio:</span><span class="data_precio">$${element.precio}.00</span>
+                                    <span>Precio:</span><span class="data_precio">$${element.precio}.00</span><span class="encabezado2">${element.moneda}</span>
                               </div>                  
                            </div>
                      </div>`        

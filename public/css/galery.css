@@ -141,7 +141,7 @@
                 {
                     
                     width: 300px;
-                    min-height: 300px;    
+                    min-height: 200px;    
                     border: 0px solid cadetblue;
                     background-color: rgb(250, 250, 250);
                     margin: auto;
@@ -169,7 +169,7 @@
                     background:-webkit-linear-gradient(320deg , rgb(206, 228, 207), rgb(182, 248, 234));    
                     padding:5px 10px;
                     gap: 2px;
-                    grid-template-rows: auto 30px; 
+                    grid-template-rows: auto auto; 
                     justify-content: stretch;   
                     height: max-content;
                 }
@@ -190,8 +190,8 @@
                 }
                 .c_info p 
                 {
-                    
-                    max-height: 100px;
+                    text-overflow:ellipsis;
+                    /*max-height: fit-content;*/
                 }
 
                 .data_precio
