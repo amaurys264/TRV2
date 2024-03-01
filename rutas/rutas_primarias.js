@@ -332,8 +332,16 @@ router.get('/api/reporte',async (req,res)=>
     {
       
         const v_real= await pool.query('select count (distinct ipclient) from log');        
-        const v_total= await pool.query('select count (*) from log');
-        const db_size= await pool.query(`SELECT pg_size_pretty(pg_database_size('renta')) AS size;`); 
+        const v_total= await pool.query('select count (*) from log');       
+        let db_size;
+        try
+                {    
+                    db_size= await pool.query(`SELECT pg_size_pretty(pg_database_size('renta')) AS size;`); 
+                }
+        catch
+                {
+                    db_size="N/D";
+                }                
         let reporte= {visitas:v_real.rows[0].count,visita_total:v_total.rows[0].count,longitud:db_size.rows[0].size }       
         res.send({reporte:reporte});  
         console.log(reporte)      
