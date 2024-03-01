@@ -57,7 +57,7 @@ router.use('*',async(solicitud, respuesta, next) => {
         
            if(solicitud.method=='GET') 
            {
-                console.log('cliente'+solicitud.ip)
+                console.log('cliente'+solicitud.ips)
                 let tiempo= new Date();                
                 let tiempo2=format_to_pg(tiempo);                            
                 await pool.query(`insert into log(tipaccess,ipclient,fecha,num_tabla,base_url) values (1,'${solicitud.ip}','${tiempo2}',1,'${solicitud.baseUrl}')`)
