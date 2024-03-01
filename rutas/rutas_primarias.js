@@ -25,7 +25,7 @@ const organizacion=multer.memoryStorage();
 const newupload=multer({storage:organizacion});
 
 //--------------------conneccion a elephant sql-------------------------------------\\
-
+/*
 var conString = "postgres://zfgcmckh:QpXviRZLMhu2uuXUYJWrhCeuUarj2Ud-@motty.db.elephantsql.com/zfgcmckh" //Can be found in the Details page
 var pool = new postgres.Client(conString);
 pool.connect(function(err) {
@@ -39,9 +39,9 @@ pool.connect(function(err) {
       console.log(result.rows[0].theTime); // >> output: 2018-08-23T14:02:57.117Z     
     });
   });
-
+*/
 //-----------------------------------------------------------------------------------//
-/*
+
  const pool = new postgres.Pool({
   user: 'postgres',
   host: 'localhost',
@@ -49,7 +49,7 @@ pool.connect(function(err) {
   password: 'Admin',
   port: 5432,
 })
-*/
+
 
 router.use('*',async(solicitud, respuesta, next) => {        
     if(solicitud.baseUrl=='/favicon.ico')   
@@ -85,8 +85,7 @@ router.post('/api/casas/mostrar',express.json(),async (req,res)=>
                  }
         
         const resultado= await pool.query(sqlquery);        
-        let imagenes= await pool.query(`select * from c_imagenes`);                      
-        console.log(imagenes.rows) 
+        let imagenes= await pool.query(`select * from c_imagenes`);                              
         resultado.rows.forEach((indice1)=>
             {
                 indice1.galeria=imagenes.rows.filter((indice2)=>
@@ -119,7 +118,7 @@ router.post('/api/casas/mostrar/lite',express.json(),async (req,res)=>
         
         const resultado= await pool.query(sqlquery);        
         let imagenes= await pool.query(`select id,path,owner from c_imagenes`); 
-        console.log(imagenes)                     
+                         
         
         resultado.rows.forEach((indice1)=>
             {
@@ -332,8 +331,12 @@ router.post('/api/transporte/mostrar/lite',express.json(),async (req,res)=>
 router.get('/api/reporte',async (req,res)=>
     {
       
-        const resultado= await pool.query('select count (distinct ipclient) from log');        
-        res.send({reporte:{visitas:resultado.rows[0].count}});        
+        const v_real= await pool.query('select count (distinct ipclient) from log');        
+        const v_total= await pool.query('select count (*) from log');
+        const db_size= await pool.query(`SELECT pg_size_pretty(pg_database_size('renta')) AS size;`); 
+        let reporte= {visitas:v_real.rows[0].count,visita_total:v_total.rows[0].count,longitud:db_size.rows[0].size }       
+        res.send({reporte:reporte});  
+        console.log(reporte)      
         res.end();
     }
 )
@@ -382,8 +385,7 @@ router.get('/login/reporte.html',(req,res)=>
 )
 router.post('/api/casas',newupload.array('imagenes'),async (req,res,next)=>
     {
-        console.log(req.files);
-        console.log(req.body);
+        
         console.log("formulario recibido#1")
         let resultado1= await pool.query(`insert into inmueble (nombre,ubicacion_p,ubicacion_z,descripcion,precio_ta,precio_tb,telefono,email,estado,posteado,piscina,cocina,moneda) values ('${req.body.nombre}','${req.body.ubicacion_p}','${req.body.ubicacion_z}','${req.body.descripcion}',${req.body.precio_ta}, 0,'+5354310877','amaurys264@gmail.com','Disponible', true,${(req.body.piscina)?'true':'false'},${(req.body.cocina)?'true':'false'},'${req.body.moneda}')`);                 
         req.files.forEach(async(element) => {            
@@ -427,8 +429,7 @@ router.post('/api/fiesta',newupload.array('f_imagenes'),async (req,res,next)=>
               const res = await pool.query(query);
         });       
         res.send("Informacion Recibida.")
-    })
-    
+    })    
 router.post('/api/transporte',newupload.array('t_imagenes'),async (req,res,next)=>
     {
         console.log("formulario recibido#4")
@@ -442,8 +443,7 @@ router.post('/api/transporte',newupload.array('t_imagenes'),async (req,res,next)
               const res = await pool.query(query);
         });  
         res.send("Informacion Recibida #4.")
-    })     
-
+    })   
 router.post('/api/check',express.json(),async (solicitud,respuesta)=>
         {
           let resultado1

@@ -21,12 +21,10 @@ icon_close.onclick=function()
    contenido.style.filter='none'
    c_detalle.style.display="none";   
 }
-window.onload=function(){      
+window.onload=function(){   
+   var time= setTimeout(()=>{cargar()},(4000))      
    peticion();  
-    
-                 
-         setTimeout(cargar,(5000))               
-  
+                         
 }
 let cargar=function()
 {
@@ -35,7 +33,7 @@ let cargar=function()
          {
             tarjeta.onclick=function()
             {
-               
+               console.log("evento..")
                nombre.innerHTML=datos.transporte[tarjeta.id].nombre;
                botonera.innerHTML=``;                             
                slider.innerHTML=``;

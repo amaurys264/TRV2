@@ -20,10 +20,15 @@
     <h2>Reporte</h2>
     <hr>
     <section>        
-            <label>No. de visitas:</label><span id="d_visitas"><i></i></span><br>                
+            <label>No. de visitas:</label><span id="d_visitas"><i></i></span><br>
+            <label>No. total de accesos:</label><span id="d_visitas_t"><i></i></span><br>
+            <label>Tamaño de la BD:</label><span id="tamanno"><i></i></span><br>
+
     </section>
     <script>
         var visitas=document.getElementById('d_visitas');
+        var accesos=document.getElementById('d_visitas_t');
+        var size=document.getElementById('tamanno');
         window.onload=function()
         {
            console.log("peticion stadisticas")
@@ -43,7 +48,9 @@
             (
                 data=>{
                     console.log(data.reporte)
-                    visitas.innerHTML=data.reporte.visitas
+                    visitas.innerHTML=data.reporte.visitas;
+                    accesos.innerHTML=data.reporte.visita_total;
+                    size.innerHTML=data.reporte.longitud;
                 }
             )    
             .catch 
