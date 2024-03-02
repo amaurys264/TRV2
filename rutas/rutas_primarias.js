@@ -331,20 +331,45 @@ router.post('/api/transporte/mostrar/lite',express.json(),async (req,res)=>
 router.get('/api/reporte',async (req,res)=>
     {
       
-        const v_real= await pool.query('select count (distinct ipclient) from log');        
-        //const v_total= await pool.query('select count (*) from log');       
+        let v_real
+        let v_total; 
         let db_size;
+        let temp;
+        try
+            {
+                temp= await pool.query('select count (distinct ipclient) from log');        
+                v_real=temp.rows[0].count
+            }
+        catch(e)
+            {
+                v_real="N/D";
+            }        
+         
+         try     
+            {
+                temp= await pool.query('select count (*) from log');       
+                v_total=temp.rows[0].count
+            }
+            catch(e) 
+            {
+                v_total="N/D";  
+            }   
+       
         try
                 {    
-                    db_size= await pool.query(`SELECT pg_size_pretty(pg_database_size('renta')) AS size;`); 
+                    temp= await pool.query(`SELECT pg_size_pretty(pg_database_size('renta')) AS size;`); 
+                    db_size=temp.rows[0].size
                 }
-        catch
+        catch(e)
                 {
                     db_size="N/D";
-                }                
-        let reporte= {visitas:v_real.rows[0].count,visita_total:v_total.rows[0].count,longitud:db_size.rows[0].size }       
-        res.send({reporte:reporte});  
-        console.log(reporte)      
+                } 
+                
+                
+        //let reporte= {visitas:v_real.rows[0].count,visita_total:v_total.rows[0].count,longitud:db_size.rows[0].size } 
+        let reporte= {visitas:v_real,visita_total:v_total,longitud:db_size } 
+        console.log(reporte)        
+        res.send({reporte:reporte});             
         res.end();
     }
 )
