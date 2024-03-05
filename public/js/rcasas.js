@@ -30,65 +30,66 @@ icon_close.onclick=function()
 }
 window.onload=function(){   
    peticion();                 
-      setTimeout(cargar,(5000))                 
+      var mitime=setinterval(cargar,(2000)) 
+      function peticion()
+      {
+         const data={
+            method:"POST",
+            body:JSON.stringify({ubicacion_p:filter_ubicacion.value,precio:filter_precio.value}),
+            headers: {
+                           'Content-Type': 'application/json'
+                     }
+         }
+         fetch('/api/casas/mostrar',data)
+         .then((resp)=>{        
+          return resp.json();
+          })
+         .then(data=>{      
+            datos=data;      
+            if (data.casas.length>0)
+               {
+                   let imagen_path="";
+                   contenedor2.innerHTML="";
+                   data.casas.forEach((element,index) => 
+                      {         
+                         if(element.galeria[0])
+                         {
+                               //imagen_path=`ofertas/${element.galeria[0].path}`;                         
+                               imagen_path=`data:${element.galeria[0].buffer.mimetype};base64,${a_base64(element.galeria[0].buffer.buffer.data)}`
+                         }
+                         else
+                         {
+                            imagen_path='./img/no_picture.jpg';
+                         }
+                         contenedor2.innerHTML+=`
+                         <div class="elemento" id='${index}'>
+                             <img src="${imagen_path}">                        
+                               <div class="c_info">
+                                  <div class=c_info1>
+                                     <span><u>${element.nombre}</u></span>
+                                     <p><i>${element.descripcion}</i></p>
+                                  </div>
+                                  <div>
+                                        <span>Precio:</span><span class="data_precio">${element.precio_ta}.00</span><span class="encabezado2">${element.moneda}</span>
+                                  </div>                  
+                               </div>
+                         </div>`        
+                      })          
+                }
+                else
+                {
+                   contenedor2.innerHTML=`<h4 style="display: block;text-align: center;margin:auto;">No hay artículos para mostrar</h4>`
+                }
+               console.log(datos)
+             })    
+                .catch((error)=>
+                      {
+                         console.error('Error:__',error+"__")
+                      })
+      }                   
 }
 
-function peticion()
-{
-   const data={
-      method:"POST",
-      body:JSON.stringify({ubicacion_p:filter_ubicacion.value,precio:filter_precio.value}),
-      headers: {
-                     'Content-Type': 'application/json'
-               }
-   }
-   fetch('/api/casas/mostrar',data)
-   .then((resp)=>{        
-    return resp.json();
-    })
-   .then(data=>{      
-      datos=data;      
-      if (data.casas.length>0)
-         {
-             let imagen_path="";
-             contenedor2.innerHTML="";
-             data.casas.forEach((element,index) => 
-                {         
-                   if(element.galeria[0])
-                   {
-                         //imagen_path=`ofertas/${element.galeria[0].path}`;                         
-                         imagen_path=`data:${element.galeria[0].buffer.mimetype};base64,${a_base64(element.galeria[0].buffer.buffer.data)}`
-                   }
-                   else
-                   {
-                      imagen_path='./img/no_picture.jpg';
-                   }
-                   contenedor2.innerHTML+=`
-                   <div class="elemento" id='${index}'>
-                       <img src="${imagen_path}">                        
-                         <div class="c_info">
-                            <div class=c_info1>
-                               <span><u>${element.nombre}</u></span>
-                               <p><i>${element.descripcion}</i></p>
-                            </div>
-                            <div>
-                                  <span>Precio:</span><span class="data_precio">${element.precio_ta}.00</span><span class="encabezado2">${element.moneda}</span>
-                            </div>                  
-                         </div>
-                   </div>`        
-                })          
-          }
-          else
-          {
-             contenedor2.innerHTML=`<h4 style="display: block;text-align: center;margin:auto;">No hay artículos para mostrar</h4>`
-          }
-         console.log(datos)
-       })    
-          .catch((error)=>
-                {
-                   console.error('Error:__',error+"__")
-                })
-}
+
 let cargar=function()
 {
    var elementos=document.querySelectorAll('.elemento')

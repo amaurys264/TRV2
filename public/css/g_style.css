@@ -409,11 +409,13 @@
                         article >h3
                         {    
                                                     
-                            text-align: center;                            
+                            text-align: center;
+                            font-size: 8vw;                            
                         } 
                         article >p
                         {      
                             color: #997912;
+                            font-size: 4vw; 
                         }
                             .text_style1
                                 {
@@ -805,5 +807,9 @@
                                 text-shadow: 1px 1px 1px #000000;
                                 width: 220px;            
                                 text-align: center;
+                            }
+                            #home1
+                            {
+                                color:rgba(65,139,168,1) ;
                             }
 }
