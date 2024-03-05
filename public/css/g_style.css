@@ -74,6 +74,24 @@
                                 align-items: center;       
                                 background-color:rgba(65,139,168,100%);
                             }
+                            #home1
+                            {
+                                display: inline ;
+                                color: #ffffff;    
+                                padding: 5px 15px;
+                                margin-right: 10px;
+                                text-shadow: 1px 1px 3px rgb(0, 0, 0);
+                                font-size: 2 rem;
+                               /* border:solid 1px blanchedalmond;*/
+                                border-radius: 2px;
+                                cursor:pointer;
+                                transition: 0.5s;
+                            }
+                            #home2
+                            {
+                                display: none   
+                            }
+                            
                             #hideshow
                             {   
                                 
@@ -82,7 +100,7 @@
                                 margin-right: 10px;
                                 text-shadow: 1px 1px 3px rgb(0, 0, 0);
                                 font-size: 2 rem;
-                                border:solid 1px blanchedalmond;
+                               /* border:solid 1px blanchedalmond;*/
                                 border-radius: 2px;
                                 cursor:pointer;
                                 transition: 0.5s;
@@ -156,7 +174,10 @@
                             }
                             #cartel
                             {
-                                
+                                display: grid;
+                                grid-template-rows: 1fr 1fr ;                               
+                                align-items:flex-end;
+                                justify-content: center;
                                 position: relative;   
                                 top :0px;
                                 bottom: 0px;
@@ -164,6 +185,7 @@
                                 right: 0px;
                                 overflow: hidden;
                                 box-shadow:black inset 0px 0px 20px inset;
+                                background-color: aliceblue;
                                 
                                 
                             }
@@ -324,7 +346,8 @@
                         }
                         .navegacion_class2
                         {                      
-                            display: flex;  
+                            display: flex;
+                            float: left;  
                         }
                         @keyframes menu_show
                         {
@@ -362,43 +385,36 @@
                             text-align: left;  
                                     
                         }
+                        picture
+                        {
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: center;
+                            align-items: center;
+                            align-content: center;
+                        }
                         #img_mapa
                             {
-                                display:block;
-                                position:relative;
-                                width: calc(100vw * 6);    
-                                -webkit-animation-name: "mapa_mundi";
-                                -moz-animation-name: "mapa_mundi";
-                    
-                                -webkit-animation-duration: 150s;
-                                -moz-animation-duration: 150s;
-                    
-                                -webkit-animation-iteration-count: infinite;
-                                -moz-animation-iteration-count: infinite;
-                    
-                                -webkit-animation-direction:normal;
-                                -moz-animation-direction:normal;
-                    
-                                -webkit-animation-timing-function: ease-in-out;
-                                -moz-animation-timing-function: ease-in-out;                
-                    
+                                position: relative;
+                                margin: auto;
+                                width:80%;
+                               /* max-width: 300px;*/
                             }
-
-                        @keyframes mapa_mundi
-                            {    
-                                0%{left:-67vw;top: -24.75vw}
-                                10%{left:-128.8vw ;top: -28.4vw;}
-                                20%{left:-162.95vw ;top: -33.55vw;}
-                                30%{left:-176.05vw ;top: -27.3vw}
-                                40%{left:-209.7vw ;top: -71.35vw}
-                                50%{left:-230.35vw ;top: -61.25vw}
-                                60%{left:-294.55vw ;top: -58.6vw}
-                                70%{left:-413.8vw ;top: -133.1vw}
-                                80%{left:-427.15vw ;top: -167.8vw}
-                                90%{left:-98.34vw ;top: -83.76vw}
-                                98%{left:-3.66vw ;top: -50.52vw}
-                                100%{left:-67vw;top: -51.75vw}
-                            }
+                        article
+                        {
+                            margin: auto;
+                            width: 80%;
+                          
+                        } 
+                        article >h3
+                        {    
+                                                    
+                            text-align: center;                            
+                        } 
+                        article >p
+                        {      
+                            color: #997912;
+                        }
                             .text_style1
                                 {
                                     color:white;   
