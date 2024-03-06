@@ -25,7 +25,7 @@ const organizacion=multer.memoryStorage();
 const newupload=multer({storage:organizacion});
 
 //--------------------conneccion a elephant sql-------------------------------------\\
-/*
+
 var conString = "postgres://zfgcmckh:QpXviRZLMhu2uuXUYJWrhCeuUarj2Ud-@motty.db.elephantsql.com/zfgcmckh" //Can be found in the Details page
 var pool = new postgres.Client(conString);
 pool.connect(function(err) {
@@ -39,9 +39,9 @@ pool.connect(function(err) {
       console.log(result.rows[0].theTime); // >> output: 2018-08-23T14:02:57.117Z     
     });
   });
-*/
-//-----------------------------------------------------------------------------------//
 
+//-----------------------------------------------------------------------------------//
+/*
  const pool = new postgres.Pool({
   user: 'postgres',
   host: 'localhost',
@@ -50,7 +50,7 @@ pool.connect(function(err) {
   port: 5432,
 })
 
-
+*/
 router.use('*',async(solicitud, respuesta, next) => {        
     if(solicitud.baseUrl=='/favicon.ico')   
     {

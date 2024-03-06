@@ -1,5 +1,6 @@
 var hideshow=document.getElementById('hideshow');
 var navegacion=document.getElementById('navegacion');
+var hand=document.getElementById('indicador1')
 navegacion.className="navegacion_class1";
 var vista=1;
 
@@ -15,7 +16,8 @@ hideshow.onclick=function()
         }
      else
         {
-            navegacion.className="navegacion_class2";   
+            navegacion.className="navegacion_class2"; 
+            hand.style.display='none';
         }  
 }
 

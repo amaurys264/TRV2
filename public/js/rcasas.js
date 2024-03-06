@@ -80,22 +80,22 @@ window.onload=function(){
                                        </div>
                                        <p><i>${element.descripcion}</i></p>
                                        <div>                
-                                          <label class="s1">Confort</label>    
-                                          <ul></ul>  
+                                          ${(element.piscina || element.cocina)?'<label class="s5">Confort</label>':''  }    
+                                          <ul>
+                                          ${element.piscina==true?'<li>Piscina</li>':''}${element.cocina==true?'<li>Cocina</li>':''}
+                                          </ul>  
                                        </div>
                                   </div>
                                   <div class="c_footer">
                                        <div>
-                                             <span class="s1" style="color:#bd2253; font-weight: 600;font-size: 2.8 rem;">$120</span>
-                                             <span class="s3"><span id="c_moneda" class="s3"></span>/noche</span>
-                                       </div>  
-                                       <div>
-                                             <a href="https://wa.me/5350103060"><i class="fa fa-whatsapp" style="font-size: 2.8 rem;padding: 0px 10px;"></i><span id="c_numero">+5350103060</span></a>                                          
+                                             <span>Precio:</span><span class="data_precio">${element.precio_ta}.00</span>
+                                             <span class="s3"><span id="c_moneda" class="s3">${element.moneda}</span>/noche</span>
+                                       </div>
+                                       <hr/>  
+                                       <div class="c_contact">
+                                             <a href="https://wa.me/5350103060"><i class="fa fa-whatsapp" style="font-size: 2.8 rem;padding: 0px 10px;"></i><span id="c_numero">Contáctame!</span></a>                                          
                                        </div>   
                                  </div>
-                                  <div>
-                                        <span>Precio:</span><span class="data_precio">${element.precio_ta}.00</span><span class="encabezado2">${element.moneda}</span>
-                                  </div>                  
                                </div>
                          </div>`        
                       })
