@@ -4,14 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/css/font-awesome.css">
-    <link rel="stylesheet" href="./css/g_style.css">   
+    <link rel="stylesheet" href="./css/g_style.css">
+    <style>
+        #indicador1{
+            text-shadow: 0px 2px 1px black;
+            -webkit-animation-name: 'n1';
+            -webkit-animation-duration: 0.8s;
+            -webkit-animation-iteration-count: infinite;
+            -webkit-animation-timing-function: ease-out;
+            -webkit-animation-direction: alternate-reverse;
+        }
+        @keyframes n1
+        {
+            0%{width: 20px;opacity: 1;}            
+            100%{width: 40px;opacity: 0;}
+        }
+
+    </style>   
 </head>
 <body>
     <div class="contenido">
         <header> 
-            <a href="index.html" id="home1"><i class="fa fa-home" ></i></a>
+            <i></i>
             <a href="index.html" id="home2"><img id="logo" src="./img/tropi-rents.png"/></a>  
-            <i id="hideshow" class="fa fa-navicon" ></i>
+            <div>
+                <i id="indicador1" class="fa fa-hand-o-right" style="color: rgb(255, 255, 255);width: 15px;font-size: 20px;"></i>
+                <i id="hideshow" class="fa fa-navicon" ></i>
+            </div>    
         </header> 
         <div id="navegacion">
             <nav>

@@ -45,11 +45,13 @@ window.onload=function(){
           return resp.json();
           })
          .then(data=>{      
-            datos=data;      
+            datos=data; 
+            console.log(data)     
             if (data.casas.length>0)
                {
                    let imagen_path="";
                    contenedor2.innerHTML="";
+                  
                    data.casas.forEach((element,index) => 
                       {         
                          if(element.galeria[0])
@@ -61,20 +63,43 @@ window.onload=function(){
                          {
                             imagen_path='./img/no_picture.jpg';
                          }
+                          /*-----------------------------------------------------------------------------------------*/
                          contenedor2.innerHTML+=`
                          <div class="elemento" id='${index}'>
-                             <img src="${imagen_path}">                        
+
+
+                               <img src="${imagen_path}">                        
                                <div class="c_info">
                                   <div class=c_info1>
-                                     <span><u>${element.nombre}</u></span>
-                                     <p><i>${element.descripcion}</i></p>
+                                       <span><u>${element.nombre}</u></span>
+                                       <div>
+                                          <span  class="s1">Ubicación:</span>  
+                                          <span  class="s2">${element.ubicacion_p}</span>
+                                          <span class="s2">,</span>
+                                          <span class="s2">${element.ubicacion_z}</span>                
+                                       </div>
+                                       <p><i>${element.descripcion}</i></p>
+                                       <div>                
+                                          <label class="s1">Confort</label>    
+                                          <ul></ul>  
+                                       </div>
                                   </div>
+                                  <div class="c_footer">
+                                       <div>
+                                             <span class="s1" style="color:#bd2253; font-weight: 600;font-size: 2.8 rem;">$120</span>
+                                             <span class="s3"><span id="c_moneda" class="s3"></span>/noche</span>
+                                       </div>  
+                                       <div>
+                                             <a href="https://wa.me/5350103060"><i class="fa fa-whatsapp" style="font-size: 2.8 rem;padding: 0px 10px;"></i><span id="c_numero">+5350103060</span></a>                                          
+                                       </div>   
+                                 </div>
                                   <div>
                                         <span>Precio:</span><span class="data_precio">${element.precio_ta}.00</span><span class="encabezado2">${element.moneda}</span>
                                   </div>                  
                                </div>
                          </div>`        
-                      })          
+                      })
+                     /*---------------------------------------------------------------------------------------*/        
                 }
                 else
                 {
