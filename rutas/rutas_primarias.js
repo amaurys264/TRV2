@@ -25,7 +25,7 @@ const organizacion=multer.memoryStorage();
 const newupload=multer({storage:organizacion});
 
 //--------------------conneccion a elephant sql-------------------------------------\\
-
+/*
 var conString = "postgres://zfgcmckh:QpXviRZLMhu2uuXUYJWrhCeuUarj2Ud-@motty.db.elephantsql.com/zfgcmckh" //Can be found in the Details page
 var pool = new postgres.Client(conString);
 pool.connect(function(err) {
@@ -39,9 +39,9 @@ pool.connect(function(err) {
       console.log(result.rows[0].theTime); // >> output: 2018-08-23T14:02:57.117Z     
     });
   });
-
+*/
 //-----------------------------------------------------------------------------------//
-/*
+
  const pool = new postgres.Pool({
   user: 'postgres',
   host: 'localhost',
@@ -50,7 +50,7 @@ pool.connect(function(err) {
   port: 5432,
 })
 
-*/
+
 router.use('*',async(solicitud, respuesta, next) => {        
     if(solicitud.baseUrl=='/favicon.ico')   
     {
@@ -132,7 +132,7 @@ router.post('/api/casas/mostrar/lite',express.json(),async (req,res)=>
                     }
                 )
             }
-        )        
+        )          
         res.send({casas:resultado.rows});
     }
 )
@@ -190,11 +190,16 @@ router.post('/api/piscina/mostrar/lite',express.json(),async (req,res)=>
         
         resultado.rows.forEach((indice1)=>
             {
-                indice1.galeria=imagenes.rows.filter((indice2)=>
+                indice1.number=0;  
+                imagenes.rows.forEach((indice2)=>
                     {
-                        return indice1.nombre==indice2.owner;
+                        if(indice1.nombre==indice2.owner)
+                        {
+                            indice1.number+=1;
+                        }
                     }
                 )
+                
             }
         )       
         res.send({piscina:resultado.rows});
@@ -222,10 +227,10 @@ router.post('/api/fiesta/mostrar',express.json(),async (req,res)=>
         resultado.rows.forEach((indice1)=>
             {
                 indice1.galeria=imagenes.rows.filter((indice2)=>
-                    {
-                        return indice1.nombre==indice2.owner;
-                    }
-                )
+                {
+                    return indice1.nombre==indice2.owner;
+                }
+            )
             }
         )        
         res.send({fiesta:resultado.rows});
@@ -432,18 +437,17 @@ router.post('/api/casas',newupload.array('imagenes'),async (req,res,next)=>
     })
 router.post('/api/pasadias',newupload.array('p_imagenes'),async (req,res,next)=>
     {
-        console.log("formulario recibido#2")        
+        console.log("formulario recibido#2") 
+        console.log(req.files)       
         let resultado1= await pool.query(`insert into piscina (nombre, ubicacion_p, ubicacion_z, horario_d, horario_n, capacidad, gastronomia, precio, notas, j_mesa, telefono,parrillada,habitaciones,moneda) values ('${req.body.p_nombre}','${req.body.p_ubicacion_p}','${req.body.p_ubicacion_z}',${(req.body.p_horario_d)?'true':'false'},${(req.body.p_horario_n)?'true':'false'},${req.body.p_capacidad},${(req.body.p_gastronomia)?'true':'false'},${req.body.p_precio},'${req.body.p_notas}',${(req.body.p_juegos)?'true':'false'},'${req.body.p_telefono}',${(req.body.p_parrillada)?'true':'false'},${(req.body.p_habitaciones)?'true':'false'},'${req.body.moneda}')`);                       
         console.log("Insertando en tabla Piscina.")
-        req.files.forEach(async(element) => {
-            //await pool.query(`insert into p_imagenes (path,nombre,owner) values ('${element.filename}','${element.originalname}','${req.body.p_nombre}')`);
-            req.files.forEach(async(element) => {            
+        req.files.forEach(async(element) => {           
+                      
                 let query = {
                     text: 'INSERT INTO p_imagenes (path,nombre,owner,buffer) VALUES ($1,$2,$3,$4)',
                     values: [element.filename,element.originalname,req.body.p_nombre,JSON.stringify(element)]
                   };
-                  const res = await pool.query(query);
-            }); 
+                  const res = await pool.query(query);            
         });
         console.log("Insertando en tabla de imagenes Piscina.")
         res.send("Informacion Recibida.")

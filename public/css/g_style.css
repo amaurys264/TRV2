@@ -812,4 +812,8 @@
                             {
                                 color:rgba(65,139,168,1) ;
                             }
+                            #indicador1
+                            {
+                                display: none;
+                            }
 }

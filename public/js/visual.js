@@ -1,5 +1,5 @@
-var galeria=document.querySelectorAll('img');
-var botonera=document.getElementById('botonera');
+//var galeria=document.querySelectorAll('img');
+
 /*botonera.addEventListener('input',(e)=>
     {
         console.log(e.target.id);   
@@ -16,11 +16,14 @@ var botonera=document.getElementById('botonera');
         });
     }
 )*/
+
+var botonera=document.getElementById('botonera');
+console.log(botonera)
 botonera.addEventListener('input',(e)=>
     {
         let galeria=document.querySelectorAll('.c_slider > img');
     
-        
+        console.log("input-event")
         galeria.forEach((element,index) => {
             if(index==e.target.id)
                 {

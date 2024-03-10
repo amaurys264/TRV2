@@ -30,7 +30,7 @@ icon_close.onclick=function()
 }
 window.onload=function(){   
    peticion();                 
-      var mitime=setinterval(cargar,(2000)) 
+      var mitime=setInterval(cargar,(2000))       
       function peticion()
       {
          const data={
@@ -51,24 +51,33 @@ window.onload=function(){
                {
                    let imagen_path="";
                    contenedor2.innerHTML="";
-                  
+                   let slider;
+                   let botonera;
                    data.casas.forEach((element,index) => 
-                      {         
-                         if(element.galeria[0])
+                      {  
+                         slider=``;
+                         botonera=``;          
+                         if(element.galeria.length>0)
                          {
-                               //imagen_path=`ofertas/${element.galeria[0].path}`;                         
-                               imagen_path=`data:${element.galeria[0].buffer.mimetype};base64,${a_base64(element.galeria[0].buffer.buffer.data)}`
+                                    
+                                 element.galeria.forEach((foto,index)=>
+                                 {
+                                       slider+= index==0?`<img class="casa_imagen" src="data:${foto.buffer.mimetype};base64,${a_base64(foto.buffer.buffer.data)}">`:`<img class="casa_imagen2" src="data:${foto.buffer.mimetype};base64,${a_base64(foto.buffer.buffer.data)}">`;
+                                       botonera+=index==0?`<input type="radio" id="${index}" name="cambio" class="c_imagedata" checked>`:`<input type="radio" id="${index}" name="cambio" class="c_imagedata">`;                              
+                                 })                                                                
                          }
                          else
                          {
-                            imagen_path='./img/no_picture.jpg';
+                           slider=`<img class="casa_imagen" src="./img/no_picture.jpg">`;
+                           botonera=`<input type="radio" id="0" name="cambio" class="c_imagedata" checked>`
                          }
                           /*-----------------------------------------------------------------------------------------*/
                          contenedor2.innerHTML+=`
                          <div class="elemento" id='${index}'>
-
-
-                               <img src="${imagen_path}">                        
+                                <div class='c_slider'>${slider} 
+                                </div>
+                                <div class='sl_menu' id="botonera">${botonera}</div> 
+                                           
                                <div class="c_info">
                                   <div class=c_info1>
                                        <span><u>${element.nombre}</u></span>
@@ -177,9 +186,7 @@ function a_base64(arrayM)
         {
             base64= base64+(String.fromCharCode(elemento));
         }
-    )
-    console.log(base64);
-    let t=btoa(base64);
-    console.log("Nuevo: "+t)   
+    )    
+    let t=btoa(base64);     
     return t;
 }
