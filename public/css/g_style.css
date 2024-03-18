@@ -221,21 +221,12 @@
                                 display:block;
                                 width: 100%;
                             }
-                            .casa_imagen{
-                                display:flex;
+                            .casa_imagen{                               
                                 width: 100%;            
-                                position: absolute;
+                                position: sticky;
                                 border-radius: 5px;
                                 left:0px;
-                                /*top:0px;*/
-                                z-index: 20;  
-                                -webkit-animation-name: 'transi1';
-                                -webkit-animation-direction: normal;
-                                -webkit-animation-duration: 0.5s;
-                                -moz-animation-timing-function:ease-in;
-                                -moz-animation-iteration-count: 1;
-                                object-fit: contain;  
-                                margin:auto 0px;
+                                object-fit: cover;                                 
                             }
                             @keyframes transi1
                             {
@@ -257,17 +248,30 @@
                             .c_slider
                             {
                                 width:100% ;
-                                height: calc(100vh/2) ; 
+                                /*height: calc(100vh/2) ; */
                                 background-color: rgb(0, 0, 0); 
                                 position: relative;
                                 display: flex;
-                                overflow:hidden;
-                                scroll-snap-type:x mandatory;    
-                                justify-content: center;
-                                align-items:center
+                                overflow:scroll;
+                                scroll-snap-type:x mandatory;                                 
                             }
-                            
-                            
+                            .sl_menu
+                            {
+                                display: block;
+                                position:relative;
+                                z-index: 100;      
+                                margin: auto;  
+                                top:-40px;
+                                padding: 2px 5px;
+                                color: #ffffff;
+                                text-shadow: 1px 1px 1px black;
+                                text-align: right;
+
+                            }
+                            .sl_menu > span
+                            {
+                                padding:2px 5px;
+                            }
                             
                             
                             #botonera
@@ -276,7 +280,7 @@
                                 position:relative;
                                 z-index: 100;      
                                 margin: auto;  
-                                top:-40px;
+                                top:-20px;
                             }   
                             #botonera *
                             { 
@@ -621,21 +625,12 @@
                             display:block;
                             width: 100%;
                         }
-                        .casa_imagen{
-                            display:flex;
+                        .casa_imagen{                               
                             width: 100%;            
-                            position: absolute;
+                            position: sticky;
                             border-radius: 5px;
                             left:0px;
-                            /*top:0px;*/
-                            z-index: 20;  
-                            -webkit-animation-name: 'transi1';
-                            -webkit-animation-direction: normal;
-                            -webkit-animation-duration: 0.5s;
-                            -moz-animation-timing-function:ease-in;
-                            -moz-animation-iteration-count: 1;
-                            object-fit: contain;  
-                            margin:auto 0px;
+                            object-fit: cover;                                 
                         }
                         @keyframes transi1
                         {
@@ -655,37 +650,34 @@
                             opacity: 0;
                         }
                         .c_slider
+                            {
+                                width:100% ;
+                                /*height: calc(100vh/2) ; */
+                                /*aspect-ratio: 10/16;*/
+                                background-color: rgb(0, 0, 0); 
+                                position: relative;
+                                display: flex;
+                                overflow-x:scroll;
+                                scroll-snap-type:x mandatory;
+                                align-items: center;                                 
+                            }     
+                        .sl_menu
                         {
-                            width:100% ;
-                            height: calc(100vh/2) ; 
-                            background-color: rgb(0, 0, 0); 
-                            position: relative;
-                            display: flex;
-                            overflow:hidden;
-                            scroll-snap-type:x mandatory;    
-                            justify-content: center;
-                            align-items:center
-                        }
-                        #botonera
-                        {   
                             display: block;
                             position:relative;
                             z-index: 100;      
                             margin: auto;  
                             top:-40px;
-                        }   
-                        #botonera *
-                        { 
-                        display: inline-block;   
-                        margin: auto;  
-                        width: 15px;
-                        height: 15px;
-                        padding: 20px; 
-                        cursor:pointer; 
-                        margin:0px 10px;
-                        background-color: #e0b31e;
-                        }
+                            padding: 2px 1px;
+                            color: #ffffff;
+                            text-shadow: 1px 1px 1px black;
+                            text-align: right;
 
+                        }
+                        .sl_menu > span
+                        {
+                            padding:2px 5px;
+                        }
 
                         @keyframes post1
                         {

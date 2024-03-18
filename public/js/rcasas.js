@@ -23,15 +23,11 @@ var filter_precio=document.querySelector('#Precio');
 
 var datos;
 
-icon_close.onclick=function()
-{
-   contenido.style.filter='none'
-   c_detalle.style.display="none";   
-}
-window.onload=function(){   
+window.onload=function()
+{   
    peticion();                 
-      var mitime=setInterval(cargar,(2000))       
-      function peticion()
+}
+function peticion()
       {
          const data={
             method:"POST",
@@ -62,21 +58,19 @@ window.onload=function(){
                                     
                                  element.galeria.forEach((foto,index)=>
                                  {
-                                       slider+= index==0?`<img class="casa_imagen" src="data:${foto.buffer.mimetype};base64,${a_base64(foto.buffer.buffer.data)}">`:`<img class="casa_imagen2" src="data:${foto.buffer.mimetype};base64,${a_base64(foto.buffer.buffer.data)}">`;
-                                       botonera+=index==0?`<input type="radio" id="${index}" name="cambio" class="c_imagedata" checked>`:`<input type="radio" id="${index}" name="cambio" class="c_imagedata">`;                              
+                                       slider+= index==0?`<img class="casa_imagen" src="data:${foto.buffer.mimetype};base64,${a_base64(foto.buffer.buffer.data)}">`:`<img class="casa_imagen" src="data:${foto.buffer.mimetype};base64,${a_base64(foto.buffer.buffer.data)}">`;                                      
                                  })                                                                
                          }
                          else
                          {
-                           slider=`<img class="casa_imagen" src="./img/no_picture.jpg">`;
-                           botonera=`<input type="radio" id="0" name="cambio" class="c_imagedata" checked>`
+                           slider=`<img class="casa_imagen" src="./img/no_picture.jpg">`;                           
                          }
                           /*-----------------------------------------------------------------------------------------*/
                          contenedor2.innerHTML+=`
                          <div class="elemento" id='${index}'>
                                 <div class='c_slider'>${slider} 
                                 </div>
-                                <div class='sl_menu' id="botonera">${botonera}</div> 
+                                <div class='sl_menu'><i class="fa fa-image"></i><span>${element.galeria.length}</span></div> 
                                            
                                <div class="c_info">
                                   <div class=c_info1>
@@ -102,7 +96,7 @@ window.onload=function(){
                                        </div>
                                        <hr/>  
                                        <div class="c_contact">
-                                             <a href="https://wa.me/5350103060"><i class="fa fa-whatsapp" style="font-size: 2.8 rem;padding: 0px 10px;"></i><span id="c_numero">Contáctame!</span></a>                                          
+                                             <a href="https://wa.me/5350103060?text=from_Website"><i class="fa fa-whatsapp" style="font-size: 2.8 rem;padding: 0px 10px;"></i><span id="c_numero">Contáctame!</span></a>                                          
                                        </div>   
                                  </div>
                                </div>
@@ -114,67 +108,23 @@ window.onload=function(){
                 {
                    contenedor2.innerHTML=`<h4 style="display: block;text-align: center;margin:auto;">No hay artículos para mostrar</h4>`
                 }
-               console.log(datos)
+               console.log(datos)               
              })    
                 .catch((error)=>
                       {
                          console.error('Error:__',error+"__")
                       })
-      }                   
-}
+      }       
 
 
-let cargar=function()
-{
-   var elementos=document.querySelectorAll('.elemento')
-  
-   elementos.forEach((tarjeta)=>
-         {
-            tarjeta.onclick=function()
-            {
-               
-               nombre.innerHTML=datos.casas[tarjeta.id].nombre;
-               botonera.innerHTML=``;                             
-               slider.innerHTML=``;
-               if(datos.casas[tarjeta.id].galeria.length>0)               
-                  {
-                     datos.casas[tarjeta.id].galeria.forEach((foto,index)=>
-                        {
-                           slider.innerHTML+= index==0?`<img class="casa_imagen" src="data:${foto.buffer.mimetype};base64,${a_base64(foto.buffer.buffer.data)}">`:`<img class="casa_imagen2" src="data:${foto.buffer.mimetype};base64,${a_base64(foto.buffer.buffer.data)}">`;
-                           botonera.innerHTML+=index==0?`<input type="radio" id="${index}" name="cambio" class="c_imagedata" checked>`:`<input type="radio" id="${index}" name="cambio" class="c_imagedata">`;
-                           
-                        }  
-                     )                     
-                  }
-                  else
-                  {
-                     slider.innerHTML=`<img class="casa_imagen" src="./img/no_picture.jpg">`;
-                     botonera.innerHTML=`<input type="radio" id="0" name="cambio" class="c_imagedata" checked>`
-                  }               
-               
-               provincia.innerHTML=datos.casas[tarjeta.id].ubicacion_p;
-               zona.innerHTML=datos.casas[tarjeta.id].ubicacion_z;
-               descripcion.innerHTML=datos.casas[tarjeta.id].descripcion;
-               estado.innerHTML=datos.casas[tarjeta.id].estado;   
-               costo.innerHTML='$'+datos.casas[tarjeta.id].precio_ta;
-               confortl.style.display=(datos.casas[tarjeta.id].piscina==true||datos.casas[tarjeta.id].cocina==true)?'block':'none'
-               confort.innerHTML=`${datos.casas[tarjeta.id].piscina==true?'<li>Piscina</li>':''}${datos.casas[tarjeta.id].cocina==true?'<li>Cocina</li>':''}`   
-               contenido.style.filter='blur(3px)';
-               c_detalle.style.display="block";
-            }
-         }
-   )  
 
-}
 filter_ubicacion.onchange=function()
 {
-   peticion();   
-   setTimeout(cargar,(1000));
+   peticion();      
 }
 filter_precio.onchange=function()
 {
-   peticion();   
-   setTimeout(cargar,(1000)); 
+   peticion();      
 }
 function a_base64(arrayM)
 {

@@ -26,59 +26,12 @@ icon_close.onclick=function()
    contenido.style.filter='none'
    c_detalle.style.display="none";   
 }
-window.onload=function(){   
-   
-   peticion()                 
-   setTimeout(cargar,(5000))               
-  
-}
-let cargar=function()
-{
-   var elementos=document.querySelectorAll('.elemento')
-   console.log(elemetos.length +" Eventos pendientes");
-   elementos.forEach((tarjeta)=>
-         {
-            tarjeta.onclick=function()
-            {
-               
-               nombre.innerHTML=datos.fiesta[tarjeta.id].nombre;
-               botonera.innerHTML=``;                             
-               slider.innerHTML=``;
-               if(datos.fiesta[tarjeta.id].galeria[0])
-                  {
-                     datos.fiesta[tarjeta.id].galeria.forEach((foto,index)=>
-                        {
-                           slider.innerHTML+= index==0?`<img class="casa_imagen" src="data:${foto.buffer.mimetype};base64,${a_base64(foto.buffer.buffer.data)}">`:`<img class="casa_imagen2" src="data:${foto.buffer.mimetype};base64,${a_base64(foto.buffer.buffer.data)}">`;
-                           botonera.innerHTML+=index==0?`<input type="radio" id="${index}" name="cambio" class="c_imagedata" checked>`:`<input type="radio" id="${index}" name="cambio" class="c_imagedata">`;
-                           //`
-                        }  
-                     )    
-                  }
-                  else
-                  {
-                     slider.innerHTML=`<img class="casa_imagen" src="./img/no_picture.jpg">`;
-                     botonera.innerHTML=`<input type="radio" id="0" name="cambio" class="c_imagedata" checked>`
-                  }               
-               provincia.innerHTML=datos.fiesta[tarjeta.id].ubicacion_p;
-               zona.innerHTML=datos.fiesta[tarjeta.id].ubicacion_z;
-               local.innerHTML=datos.fiesta[tarjeta.id].local+" con capacidad para "+ datos.fiesta[tarjeta.id].capacidad+ " personas.";
-               descripcion.innerHTML=datos.fiesta[tarjeta.id].nota;
-               if(datos.fiesta[tarjeta.id].horario_d==false && datos.fiesta[tarjeta.id].horario_n==false){horario.innerHTML='Horario a convenir.'}
-               if(datos.fiesta[tarjeta.id].horario_d==false && datos.fiesta[tarjeta.id].horario_n==true){horario.innerHTML='Actividades en horario nocturno.'}
-               if(datos.fiesta[tarjeta.id].horario_d==true && datos.fiesta[tarjeta.id].horario_n==false){horario.innerHTML='Actividades en horario diurno.'}
-               if(datos.fiesta[tarjeta.id].horario_d==true && datos.fiesta[tarjeta.id].horario_n==true){horario.innerHTML='Actividades diurnas y nocturnas.'}                                                    
-               costo.innerHTML='$'+datos.fiesta[tarjeta.id].precio_ta;
+window.onload=function()
+{      
+   peticion()               
+} 
 
-               confort.innerHTML=`${datos.fiesta[tarjeta.id].e_audio?'<li class="s4">Equipo de audio</li>':''}${datos.fiesta[tarjeta.id].decoracion?'<li class="s4">Servicio de decoración</li>':''}
-               ${datos.fiesta[tarjeta.id].piscina?'<li class="s4">Piscina</li>':''}${datos.fiesta[tarjeta.id].gastronomia?'<li class="s4">Gastronomía</li>':''}${datos.fiesta[tarjeta.id].entretenimiento?'<li class="s4">Entretenimiento</li>':''}`
-               costo.innerHTML=`${datos.fiesta[tarjeta.id].precio!==0? "$"+datos.fiesta[tarjeta.id].precio:"Precio a convenir."}`                  
-               contenido.style.filter='blur(3px)';
-               c_detalle.style.display="block";
-            }
-         }
-   )  
 
-}
 function peticion()
 {
    const data={
@@ -95,40 +48,90 @@ function peticion()
 
    .then(data=>{            
       datos=data;
+      console.log(data) 
       if (data.fiesta.length>0)
          {
-             let imagen_path="";
-             contenedor2.innerHTML="";
-             data.fiesta.forEach((element,index) => 
-                {         
-                   if(element.galeria[0])
-                   {
-                     imagen_path=`data:${element.galeria[0].buffer.mimetype};base64,${a_base64(element.galeria[0].buffer.buffer.data)}`
-                   }
-                   else
-                   {
-                     imagen_path='./img/no_picture.jpg';
-                   }
-                   contenedor2.innerHTML+=`
-                   <div class="elemento" id='${index}'>
-                   <img src="${imagen_path}">                        
-                         <div class="c_info">
-                            <div class=c_info1>
-                               <span><u>${element.nombre}</u></span>
-                               <p><i>${element.nota}</i></p>
-                            </div>
-                            <div>
-                                  <span>Precio:</span><span class="data_precio">$${element.precio}.00</span><span class="encabezado2">${element.moneda}</span>
-                            </div>                  
-                         </div>
-                   </div>`        
-                })          
+            contenedor2.innerHTML='';
+               let imagen_path="";
+               data.fiesta.forEach((element,index) => 
+                  {     
+                     function generar_horario()
+                        {
+                           if(element.horario_d==false && element.horario_n==false){return 'Horario a convenir.'}
+                           if(element.horario_d==false && element.horario_n==true){return 'Disponible en horario nocturno.'}
+                           if(element.horario_d==true && element.horario_n==false){return 'Disponible en horario diurno.'}
+                           if(element.horario_d==true && element.horario_n==true){return 'Disponible en horario diurnas y nocturnas.'}
+                        }
+                     
+                         slider=``;
+                         botonera=``;          
+                         if(element.galeria.length>0)
+                         {
+                                    
+                                 element.galeria.forEach((foto,index)=>
+                                 {
+                                       slider+= index==0?`<img class="casa_imagen" src="data:${foto.buffer.mimetype};base64,${a_base64(foto.buffer.buffer.data)}">`:`<img class="casa_imagen" src="data:${foto.buffer.mimetype};base64,${a_base64(foto.buffer.buffer.data)}">`;                                      
+                                 })                                                                
+                         }
+                         else
+                         {
+                           slider=`<img class="casa_imagen" src="./img/no_picture.jpg">`;                           
+                         }
+                       
+                        contenedor2.innerHTML+=`
+                         <div class="elemento" id='${index}'>
+                                <div class='c_slider'>${slider} 
+                                </div>
+                                <div class='sl_menu'><i class="fa fa-image"></i><span>${element.galeria.length}</span></div> 
+                                           
+                               <div class="c_info">
+                                  <div class=c_info1>
+                                       <span><u>${element.nombre}</u></span>
+                                       <div>
+                                          <span  class="s1">Ubicación:</span>  
+                                          <span  class="s2">${element.ubicacion_p}</span>
+                                          <span class="s2">,</span>
+                                          <span class="s2">${element.ubicacion_z}</span>                
+                                       </div>
+                                       <div>
+                                          <span class="s4">Capacidad para ${element.capacidad} personas 
+                                          </span>
+                                       </div>
+                                       <p><i>${element.nota}</i></p>
+                                       <div>                
+                                          <span class="s1">${generar_horario()}                                            
+                                          </span>
+                                       </div>
+                                       <div>                
+                                          ${(element.decoracion || element.e_audio || element.entretenimiento || element.gastronomia || element.piscina)?'<label class="s5">Confort</label>':''  }    
+                                          <ul>
+                                          ${element.decoracion==true?'<li>Piscina</li>':''}
+                                          ${element.e_audio==true?'<li>Habitaciones</li>':''}
+                                          ${element.entretenimiento==true?'<li>Entretenimiento</li>':''}
+                                          ${element.gastronomia==true?'<li>Gastronomía</li>':''}                                         
+                                          ${element.piscina==true?'<li>Piscina</li>':''} 
+                                          </ul>  
+                                       </div>
+                                  </div>
+                                  <div class="c_footer">
+                                       <div>
+                                             <span>Precio:</span><span class="data_precio">${element.precio}.00</span>
+                                             <span class="s3"><span id="c_moneda" class="s3">${element.moneda}</span>/noche</span>
+                                       </div>
+                                       <hr/>  
+                                       <div class="c_contact">
+                                             <a href="https://wa.me/5350103060?text=from_Website"><i class="fa fa-whatsapp" style="font-size: 2.8 rem;padding: 0px 10px;"></i><span id="c_numero">Contáctame!</span></a>                                          
+                                       </div>   
+                                 </div>
+                               </div>
+                         </div>`                
+                  })
           }
           else
           {
              contenedor2.innerHTML=`<h4 style="display: block;text-align: center;margin:auto;">No hay artículos para mostrar</h4>`
           }
-          
+         
        })    
           .catch((error)=>
                 {
@@ -137,15 +140,13 @@ function peticion()
 }
 filter_ubicacion.onchange=function()
 {
-   peticion();
+   peticion();  
    
-   setTimeout(cargar,(1000));
 }
 filter_precio.onchange=function()
 {
-   peticion();
-   
-   setTimeout(cargar,(1000)); 
+   peticion();  
+ 
 }
 
 function a_base64(arrayM)
@@ -159,8 +160,6 @@ function a_base64(arrayM)
             base64= base64+(String.fromCharCode(elemento));
         }
     )
-    console.log(base64);
-    let t=btoa(base64);
-    console.log("Nuevo: "+t)   
+      let t=btoa(base64);    
     return t;
 }

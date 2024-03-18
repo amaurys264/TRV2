@@ -28,59 +28,9 @@ icon_close.onclick=function()
 }
 window.onload=function(){   
    
-   peticion();                  
-   setTimeout(cargar,(5000))               
-  
+   peticion();  
 }
-let cargar=function()
-{
-   var elementos=document.querySelectorAll('.elemento')
-   
-   elementos.forEach((tarjeta)=>
-         {
-            tarjeta.onclick=function()
-            {
-               
-               nombre.innerHTML=datos.piscina[tarjeta.id].nombre;
-               botonera.innerHTML=``;                             
-               slider.innerHTML=``;
-               if(datos.piscina[tarjeta.id].galeria.length>0)
-                  {
-                     datos.piscina[tarjeta.id].galeria.forEach((foto,index)=>
-                     {
-                        slider.innerHTML+= index==0?`<img class="casa_imagen" src="data:${foto.buffer.mimetype};base64,${a_base64(foto.buffer.buffer.data)}">`:`<img class="casa_imagen2" src="data:${foto.buffer.mimetype};base64,${a_base64(foto.buffer.buffer.data)}">`;
-                        botonera.innerHTML+=index==0?`<input type="radio" id="${index}" name="cambio" class="c_imagedata" checked>`:`<input type="radio" id="${index}" name="cambio" class="c_imagedata">`;
-                        
-                     }  
-                  )   
-                  }
-                  else
-                  {
-                     slider.innerHTML=`<img class="casa_imagen" src="./img/no_picture.jpg">`;
-                     botonera.innerHTML=`<input type="radio" id="0" name="cambio" class="c_imagedata" checked>`
-                  }        
-              
-               provincia.innerHTML=datos.piscina[tarjeta.id].ubicacion_p;
-               zona.innerHTML=datos.piscina[tarjeta.id].ubicacion_z;
-               capacidad.innerHTML="Capacidad para "+ datos.piscina[tarjeta.id].capacidad+" personas."
-               descripcion.innerHTML=datos.piscina[tarjeta.id].notas;              
-               costo.innerHTML='$'+datos.piscina[tarjeta.id].precio_ta;
-               if(datos.piscina[tarjeta.id].horario_d==false && datos.piscina[tarjeta.id].horario_n==false){horario.innerHTML='Horario a convenir.'}
-               if(datos.piscina[tarjeta.id].horario_d==false && datos.piscina[tarjeta.id].horario_n==true){horario.innerHTML='Disponible en horario nocturno.'}
-               if(datos.piscina[tarjeta.id].horario_d==true && datos.piscina[tarjeta.id].horario_n==false){horario.innerHTML='Disponible en horario diurno.'}
-               if(datos.piscina[tarjeta.id].horario_d==true && datos.piscina[tarjeta.id].horario_n==true){horario.innerHTML='Disponible en horario diurnas y nocturnas.'}
-               confort_l.style.display=(datos.piscina[tarjeta.id].gastronomia==true||datos.piscina[tarjeta.id].j_mesa==true||datos.piscina[tarjeta.id].parrillada||datos.piscina[tarjeta.id].habitaciones)?'block':'none'
 
-               confort.innerHTML=`${datos.piscina[tarjeta.id].gastronomia?'<li class="s4">Gastronomía.</li>':''}${datos.piscina[tarjeta.id].j_mesa?'<li class="s4">Entretenimiento.</li>':''}
-               ${datos.piscina[tarjeta.id].parrillada?'<li class="s4">Parrillada.</li>':''}${datos.piscina[tarjeta.id].habitaciones?'<li class="s4">Habitaciones.</li>':''}`;
-               costo.innerHTML=`${datos.piscina[tarjeta.id].precio!==0? "$"+datos.piscina[tarjeta.id].precio:"Precio a convenir."}`
-               contenido.style.filter='blur(3px)';
-               c_detalle.style.display="block";
-            }
-         }
-   )  
-
-}
 function peticion()
 {
    const data={
@@ -99,33 +49,82 @@ function peticion()
         //flayer.src=document.location.origin+data.setup.pro_flayer;
         
         datos=data;
+        console.log(data)
         if (data.piscina.length>0)
            {
             contenedor2.innerHTML='';
                let imagen_path="";
                data.piscina.forEach((element,index) => 
-                  {         
-                     if(element.galeria[0])
-                     {
-                        imagen_path=`data:${element.galeria[0].buffer.mimetype};base64,${a_base64(element.galeria[0].buffer.buffer.data)}`
-                     }
-                     else
-                     {
-                        imagen_path='./img/no_picture.jpg';
-                     }
-                     contenedor2.innerHTML+=`
-                     <div class="elemento" id='${index}'>
-                         <img src="${imagen_path}">  
-                           <div class="c_info">
-                              <div class=c_info1>
-                                 <span><u>${element.nombre}</u></span>
-                                 <p><i>${element.notas}</i></p>
-                              </div>
-                              <div>
-                                    <span>Precio:</span><span class="data_precio">$${element.precio}.00</span><span class="encabezado2">${element.moneda}</span>
-                              </div>                  
-                           </div>
-                     </div>`        
+                  {     
+                     function generar_horario()
+                        {
+                           if(element.horario_d==false && element.horario_n==false){return 'Horario a convenir.'}
+                           if(element.horario_d==false && element.horario_n==true){return 'Disponible en horario nocturno.'}
+                           if(element.horario_d==true && element.horario_n==false){return 'Disponible en horario diurno.'}
+                           if(element.horario_d==true && element.horario_n==true){return 'Disponible en horario diurnas y nocturnas.'}
+                        }
+                     
+                         slider=``;
+                         botonera=``;          
+                         if(element.galeria.length>0)
+                         {
+                                    
+                                 element.galeria.forEach((foto,index)=>
+                                 {
+                                       slider+= index==0?`<img class="casa_imagen" src="data:${foto.buffer.mimetype};base64,${a_base64(foto.buffer.buffer.data)}">`:`<img class="casa_imagen" src="data:${foto.buffer.mimetype};base64,${a_base64(foto.buffer.buffer.data)}">`;                                      
+                                 })                                                                
+                         }
+                         else
+                         {
+                           slider=`<img class="casa_imagen" src="./img/no_picture.jpg">`;                           
+                         }
+                          /*-----------------------------------------------------------------------------------------*/
+                         contenedor2.innerHTML+=`
+                         <div class="elemento" id='${index}'>
+                                <div class='c_slider'>${slider} 
+                                </div>
+                                <div class='sl_menu'><i class="fa fa-image"></i><span>${element.galeria.length}</span></div> 
+                                           
+                               <div class="c_info">
+                                  <div class=c_info1>
+                                       <span><u>${element.nombre}</u></span>
+                                       <div>
+                                          <span  class="s1">Ubicación:</span>  
+                                          <span  class="s2">${element.ubicacion_p}</span>
+                                          <span class="s2">,</span>
+                                          <span class="s2">${element.ubicacion_z}</span>                
+                                       </div>
+                                       <div>
+                                          <span class="s4">Capacidad para ${element.capacidad} personas 
+                                          </span>
+                                       </div>
+                                       <p><i>${element.notas}</i></p>
+                                       <div>                
+                                          <span class="s1">${generar_horario()}                                            
+                                          </span>
+                                       </div>
+                                       <div>                
+                                          ${(element.gastronomia || element.habitaciones || element.j_mesa || element.parrillada)?'<label class="s5">Confort</label>':''  }    
+                                          <ul>
+                                          ${element.gastronomia==true?'<li>Piscina</li>':''}
+                                          ${element.habitaciones=true?'<li>Habitaciones</li>':''}
+                                          ${element.j_mesa=true?'<li>Entretenimiento</li>':''}
+                                          ${element.parrillada=true?'<li>Parrillada</li>':''}                                         
+                                          </ul>  
+                                       </div>
+                                  </div>
+                                  <div class="c_footer">
+                                       <div>
+                                             <span>Precio:</span><span class="data_precio">${element.precio}.00</span>
+                                             <span class="s3"><span id="c_moneda" class="s3">${element.moneda}</span>/noche</span>
+                                       </div>
+                                       <hr/>  
+                                       <div class="c_contact">
+                                             <a href="https://wa.me/5350103060?text=from_Website"><i class="fa fa-whatsapp" style="font-size: 2.8 rem;padding: 0px 10px;"></i><span id="c_numero">Contáctame!</span></a>                                          
+                                       </div>   
+                                 </div>
+                               </div>
+                         </div>`                
                   })          
             }
             else
@@ -145,14 +144,10 @@ function peticion()
 filter_ubicacion.onchange=function()
 {
    peticion();
-   
-   setTimeout(cargar,(1000));
 }
 filter_precio.onchange=function()
 {
    peticion();
-   
-   setTimeout(cargar,(1000));    
 }
 
 function a_base64(arrayM)
@@ -166,8 +161,7 @@ function a_base64(arrayM)
             base64= base64+(String.fromCharCode(elemento));
         }
     )
-    console.log(base64);
-    let t=btoa(base64);
-    console.log("Nuevo: "+t)   
+    let t=btoa(base64);   
     return t;
 }
+

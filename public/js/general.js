@@ -17,7 +17,12 @@ hideshow.onclick=function()
      else
         {
             navegacion.className="navegacion_class2"; 
-            hand.style.display='none';
+            try
+            {
+                hand.style.display='none';
+            }
+            catch
+            {}    
         }  
 }
 

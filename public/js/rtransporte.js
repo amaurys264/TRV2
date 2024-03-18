@@ -21,50 +21,11 @@ icon_close.onclick=function()
    contenido.style.filter='none'
    c_detalle.style.display="none";   
 }
-window.onload=function(){   
-   var time= setTimeout(()=>{cargar()},(4000))      
+window.onload=function(){        
    peticion();  
                          
 }
-let cargar=function()
-{
-   var elementos=document.querySelectorAll('.elemento')   
-   elementos.forEach((tarjeta)=>
-         {
-            tarjeta.onclick=function()
-            {
-               console.log("evento..")
-               nombre.innerHTML=datos.transporte[tarjeta.id].nombre;
-               botonera.innerHTML=``;                             
-               slider.innerHTML=``;
-               if(datos.transporte[tarjeta.id].galeria[0])
-                  {                     
-                     datos.transporte[tarjeta.id].galeria.forEach((foto,index)=>
-                     {
-                        slider.innerHTML+= index==0?`<img class="casa_imagen" src="data:${foto.buffer.mimetype};base64,${a_base64(foto.buffer.buffer.data)}">`:`<img class="casa_imagen2" src="data:${foto.buffer.mimetype};base64,${a_base64(foto.buffer.buffer.data)}">`;
-                        botonera.innerHTML+=index==0?`<input type="radio" id="${index}" name="cambio" class="c_imagedata" checked>`:`<input type="radio" id="${index}" name="cambio" class="c_imagedata">`;
-                        //`
-                     }  
-                   )     
-                  }
-                  else
-                  {
-                     //imagen.src='./img/no_picture.jpg'
-                     
-                     slider.innerHTML=`<img class="casa_imagen" src="./img/no_picture.jpg">`;
-                     botonera.innerHTML=`<input type="radio" id="0" name="cambio" class="c_imagedata" checked>`
-                  }   
-               embrague.innerHTML= datos.transporte[tarjeta.id].embrage;  
-               capacidad.innerHTML=datos.transporte[tarjeta.id].capacidad;
-               descripcion.innerHTML=datos.transporte[tarjeta.id].nota;              
-               autonomia.innerHTML= datos.transporte[tarjeta.id].autonomia;           
-               contenido.style.filter='blur(3px)';
-               c_detalle.style.display="block";
-            }
-         }
-   )  
 
-}
 function peticion()
 {
    const data={
@@ -80,36 +41,69 @@ fetch('/api/transporte/mostrar',data)
       })
 
      .then(data=>{             
-        //console.log(data);
+        console.log(data);
         datos=data;
         if (data.transporte.length>0)
            {
-               let imagen_path="";
-               contenedor2.innerHTML="";
-               data.transporte.forEach((element,index) => 
-                  {         
-                     if(element.galeria[0])
-                     {
-                        imagen_path=`data:${element.galeria[0].buffer.mimetype};base64,${a_base64(element.galeria[0].buffer.buffer.data)}`
-                     }
-                     else
-                     {
-                        imagen_path='./img/no_picture.jpg';
-                     }
-                     contenedor2.innerHTML+=`
-                     <div class="elemento" id='${index}'>
-                        <img src="${imagen_path}"> 
-                           <div class="c_info">
-                              <div class=c_info1>
-                                 <span><u>${element.nombre}</u></span>
-                                 <p><i>${element.nota}</i></p>
+            contenedor2.innerHTML='';
+            let imagen_path="";
+            data.transporte.forEach((element,index) => 
+               {     
+                                    
+                      slider=``;                               
+                      if(element.galeria.length>0)
+                      {
+                                 
+                              element.galeria.forEach((foto,index)=>
+                              {
+                                    slider+= index==0?`<img class="casa_imagen" src="data:${foto.buffer.mimetype};base64,${a_base64(foto.buffer.buffer.data)}">`:`<img class="casa_imagen" src="data:${foto.buffer.mimetype};base64,${a_base64(foto.buffer.buffer.data)}">`;                                      
+                              })                                                                
+                      }
+                      else
+                      {
+                        slider=`<img class="casa_imagen" src="./img/no_picture.jpg">`;                           
+                      }
+                       /*-----------------------------------------------------------------------------------------*/
+                      contenedor2.innerHTML+=`
+                      <div class="elemento" id='${index}'>
+                             <div class='c_slider'>${slider} 
+                             </div>
+                             <div class='sl_menu'><i class="fa fa-image"></i><span>${element.galeria.length}</span></div> 
+                                        
+                            <div class="c_info">
+                               <div class=c_info1>
+                                    <span><u>${element.nombre}</u></span>
+                                    <div > 
+                                          <label class="s1">Modelo</label>               
+                                          <span class="s1">${element.modelo}                                            
+                                          </span>
+                                    </div>
+                                    <div>
+                                       <span class="s4">Capacidad para ${element.capacidad} personas 
+                                       </span>
+                                    </div>
+                                    <p><i>${element.nota}</i></p>
+                                   
+                                    <div>                
+                                       <label class="s5">Tipo de embrague</label>
+                                       <ul>
+                                       ${element.embrage}                                       
+                                       </ul>  
+                                    </div>
+                               </div>
+                               <div class="c_footer">
+                                    <div>
+                                          <span>Autonomía:</span><span class="data_precio">${element.autonomia}.00</span>
+                                          <span class="s3"><span id="c_moneda" class="s3"></span>km</span>
+                                    </div>
+                                    <hr/>  
+                                    <div class="c_contact">
+                                          <a href="https://wa.me/5350103060"><i class="fa fa-whatsapp" style="font-size: 2.8 rem;padding: 0px 10px;"></i><span id="c_numero">Contáctame!</span></a>                                          
+                                    </div>   
                               </div>
-                              <div>
-                                    <span>Autonomía(Km):</span><span class="data_precio">${element.autonomia}</span>
-                              </div>                  
-                           </div>
-                     </div>`        
-                  })          
+                            </div>
+                      </div>`                
+               })          
             }
             else
             {
@@ -124,9 +118,7 @@ fetch('/api/transporte/mostrar',data)
 }
 filter_autonomia.onchange=function()
 {
-   peticion();
-   
-   setTimeout(cargar,(1000)); 
+   peticion();  
 }
 
 function a_base64(arrayM)
@@ -139,9 +131,7 @@ function a_base64(arrayM)
         {
             base64= base64+(String.fromCharCode(elemento));
         }
-    )
-    console.log(base64);
-    let t=btoa(base64);
-    console.log("Nuevo: "+t)   
+    ) 
+    let t=btoa(base64);   
     return t;
 }

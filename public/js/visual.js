@@ -17,22 +17,25 @@
     }
 )*/
 
-var botonera=document.getElementById('botonera');
-console.log(botonera)
-botonera.addEventListener('input',(e)=>
-    {
-        let galeria=document.querySelectorAll('.c_slider > img');
-    
-        console.log("input-event")
-        galeria.forEach((element,index) => {
-            if(index==e.target.id)
-                {
-                    element.className="casa_imagen";
-                }
-                else
-                {
-                    element.className="casa_imagen2";
-                }
-        });
-    }
-)
+function mievento()
+{
+        var botonera=document.getElementById('botonera');
+        console.log(botonera)
+        botonera.addEventListener('input',(e)=>
+            {
+                let galeria=document.querySelectorAll('.c_slider > img');
+            
+                console.log("input-event")
+                galeria.forEach((element,index) => {
+                    if(index==e.target.id)
+                        {
+                            element.className="casa_imagen";
+                        }
+                        else
+                        {
+                            element.className="casa_imagen2";
+                        }
+                });
+            }
+        )
+}
