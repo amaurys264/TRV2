@@ -96,7 +96,7 @@ function peticion()
                                        </div>
                                        <hr/>  
                                        <div class="c_contact">
-                                             <a href="https://wa.me/5350103060?text=from_Website"><i class="fa fa-whatsapp" style="font-size: 2.8 rem;padding: 0px 10px;"></i><span id="c_numero">Contáctame!</span></a>                                          
+                                             <a href="https://wa.me/5350103060?text=Hola.He%20visto%20su%20sitio%20web%20y"><i class="fa fa-whatsapp" style="font-size: 2.8 rem;padding: 0px 10px;"></i><span id="c_numero">Contáctame!</span></a>                                          
                                        </div>   
                                  </div>
                                </div>
